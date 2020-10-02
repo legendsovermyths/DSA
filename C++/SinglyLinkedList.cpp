@@ -34,6 +34,17 @@ public:
             length += 1;
         }
     }
+    void pop()
+    {
+        Node *prev = head;
+        while (prev->link->link != NULL)
+        {
+            prev = prev->link;
+        }
+        tail = prev;
+        tail->link = NULL;
+        length -= 1;
+    }
     void printList(Node *n)
     {
         while (n != NULL)
@@ -49,5 +60,11 @@ int main()
     l1.push(10);
     l1.push(11);
     l1.push(13);
+    l1.push(17);
+    l1.push(21);
+    l1.push(31);
+    l1.printList(l1.head);
+    cout << "\n";
+    l1.pop();
     l1.printList(l1.head);
 }
