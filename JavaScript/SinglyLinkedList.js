@@ -22,10 +22,21 @@ class SinglyLinkedList {
       this.length += 1;
     }
   }
+  pop() {
+    var prev = this.head;
+    while (prev.next.next != null) {
+      prev = prev.next;
+    }
+    this.tail = prev;
+    this.tail.next = null;
+    this.length -= 1;
+  }
 }
 list = new SinglyLinkedList();
 list.push(12);
 list.push(13);
 list.push(16);
 list.push(18);
+console.log(list);
+list.pop();
 console.log(list);
