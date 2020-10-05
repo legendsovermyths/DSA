@@ -100,12 +100,10 @@ class SinglyLinkedList {
   remove(index) {
     if (index == this.length - 1) {
       this.pop();
-      this.length -= 1;
       return;
     }
     if (index == 0) {
       this.shift();
-      this.length -= 1;
       return;
     }
     var count = 0;

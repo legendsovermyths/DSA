@@ -112,13 +112,11 @@ public:
         if (index == 0)
         {
             shift();
-            length -= 1;
             return;
         }
         if (index == length - 1)
         {
             pop();
-            length -= 1;
             return;
         }
 
@@ -157,6 +155,21 @@ public:
         newNode->data = value;
         length += 1;
     }
+    void reverse()
+    {
+        Node *newNode = head;
+        head = tail;
+        tail = newNode;
+        Node *next;
+        Node *prev = NULL;
+        for (int i = 0; i < length; i++)
+        {
+            next = newNode->link;
+            newNode->link = prev;
+            prev = newNode;
+            newNode = next;
+        }
+    }
 };
 int main()
 {
@@ -184,5 +197,8 @@ int main()
     l1.printList(l1.head);
     cout << "\n";
     l1.remove(0);
+    l1.printList(l1.head);
+    cout << "\n";
+    l1.reverse();
     l1.printList(l1.head);
 }
