@@ -10,6 +10,13 @@ class SinglyLinkedList {
     this.tail = null;
     this.length = 0;
   }
+  print() {
+    var n = this.head;
+    while (n) {
+      process.stdout.write(n.val.toString() + " ");
+      n = n.next;
+    }
+  }
   push(val) {
     var node = new Node(val);
     if (this.head === null) {
@@ -112,6 +119,19 @@ class SinglyLinkedList {
     this.length -= 1;
     return;
   }
+  reverse() {
+    var tempNode = this.head;
+    this.head = this.tail;
+    this.tail = tempNode;
+    var next;
+    var prev = null;
+    for (let i = 0; i < this.length; i++) {
+      next = tempNode.next;
+      tempNode.next = prev;
+      prev = tempNode;
+      tempNode = next;
+    }
+  }
 }
 list = new SinglyLinkedList();
 list.push(12);
@@ -130,5 +150,7 @@ list.set(2, 990);
 console.log(list);
 list.insert(0, 12);
 console.log(list);
-list.remove(1);
-console.log(list);
+list.print();
+list.reverse();
+console.log();
+list.print();
