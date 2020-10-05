@@ -77,6 +77,22 @@ public:
             n = n->link;
         }
     }
+    void set(int index, int val)
+    {
+
+        if (index >= length)
+            return;
+        int count = 0;
+        Node *cur;
+        cur = head;
+        while (index != count)
+        {
+            cur = cur->link;
+            count += 1;
+        }
+        cur->data = val;
+        return;
+    }
     int get(int val)
     {
         if (val >= length)
@@ -90,6 +106,56 @@ public:
             count += 1;
         }
         return cur->data;
+    }
+    void remove(int index)
+    {
+        if (index == 0)
+        {
+            shift();
+            length -= 1;
+            return;
+        }
+        if (index == length - 1)
+        {
+            pop();
+            length -= 1;
+            return;
+        }
+
+        if (index >= length)
+            return;
+        int count = 0;
+        Node *cur;
+        cur = head;
+        while (index - 1 != count)
+        {
+            cur = cur->link;
+            count += 1;
+        }
+        cur->link = cur->link->link;
+        length -= 1;
+    }
+    void insert(int index, int value)
+    {
+        if (index >= length)
+            return;
+        if (index == 0)
+        {
+            unshift(value);
+            return;
+        }
+        int count = 0;
+        Node *prev = head;
+        while (count != index - 1)
+        {
+            prev = prev->link;
+            count += 1;
+        }
+        Node *newNode = new Node();
+        newNode->link = prev->link;
+        prev->link = newNode;
+        newNode->data = value;
+        length += 1;
     }
 };
 int main()
@@ -110,4 +176,13 @@ int main()
     int give = l1.get(2);
     cout << "\n";
     cout << give;
+    l1.set(2, 7);
+    cout << "\n";
+    l1.printList(l1.head);
+    l1.insert(0, 7);
+    cout << "\n";
+    l1.printList(l1.head);
+    cout << "\n";
+    l1.remove(0);
+    l1.printList(l1.head);
 }

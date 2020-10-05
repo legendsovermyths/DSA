@@ -52,6 +52,17 @@ class SinglyLinkedList {
     this.head = newNode;
     this.length += 1;
   }
+  set(index, val) {
+    if (index >= this.length) return false;
+    var count = 0;
+    var newNode = this.head;
+    while (count != index) {
+      newNode = newNode.next;
+      count += 1;
+    }
+    newNode.val = val;
+    return true;
+  }
   get(val) {
     if (val >= this.length) return undefined;
     var count = 0;
@@ -62,6 +73,44 @@ class SinglyLinkedList {
       count += 1;
     }
     return newNode.val;
+  }
+  insert(index, val) {
+    if (index >= this.length) return null;
+    if (index === 0) {
+      this.unshift(val);
+      return;
+    }
+    var count = 0;
+    var curr = this.head;
+    while (index - 1 != count) {
+      curr = curr.next;
+    }
+    var newNode = new Node(val);
+    newNode.next = curr.next;
+    curr.next = newNode;
+    this.length += 1;
+  }
+  remove(index) {
+    if (index == this.length - 1) {
+      this.pop();
+      this.length -= 1;
+      return;
+    }
+    if (index == 0) {
+      this.shift();
+      this.length -= 1;
+      return;
+    }
+    var count = 0;
+    var newNode = new Node();
+    newNode = this.head;
+    while (count != index - 1) {
+      newNode = newNode.next;
+      count += 1;
+    }
+    newNode.next = newNode.next.next;
+    this.length -= 1;
+    return;
   }
 }
 list = new SinglyLinkedList();
@@ -77,3 +126,9 @@ console.log(list);
 list.unshift(11);
 console.log(list);
 console.log(list.get(2));
+list.set(2, 990);
+console.log(list);
+list.insert(0, 12);
+console.log(list);
+list.remove(1);
+console.log(list);
