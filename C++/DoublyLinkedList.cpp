@@ -97,6 +97,23 @@ public:
         newNode->data = value;
         return;
     }
+    void insert(int index, int value)
+    {
+        int count = 0;
+        Node *node = head;
+        while (count != index - 1)
+        {
+            node = node->next;
+            count++;
+        }
+        Node *newNode = new Node();
+        newNode->data = value;
+        newNode->next = node->next;
+        newNode->prev = node;
+        node->next = newNode;
+        newNode->next->prev = newNode;
+        length += 1;
+    }
 };
 int main()
 {
@@ -120,4 +137,9 @@ int main()
     cout << "\n";
     list.set(0, 99);
     list.printForward(list.head);
+    cout << "\n";
+    list.insert(4, 73465);
+    list.printForward(list.head);
+    cout << "\n";
+    list.printBackward(list.tail);
 }
