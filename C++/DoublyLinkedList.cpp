@@ -69,6 +69,34 @@ public:
         head = newNode;
         length += 1;
     }
+    int get(int index)
+    {
+        if (index >= length)
+            return 0;
+        int count = 0;
+        Node *newnode = head;
+        while (count != index)
+        {
+            newnode = newnode->next;
+            ;
+            count += 1;
+        }
+        return newnode->data;
+    }
+    void set(int index, int value)
+    {
+        if (index > length)
+            return;
+        Node *newNode = head;
+        int count = 0;
+        while (index != count)
+        {
+            newNode = newNode->next;
+            count += 1;
+        }
+        newNode->data = value;
+        return;
+    }
 };
 int main()
 {
@@ -86,5 +114,10 @@ int main()
     list.printForward(list.head);
     cout << "\n";
     list.unshift(0);
+    list.printForward(list.head);
+    cout << "\n";
+    cout << list.get(3);
+    cout << "\n";
+    list.set(0, 99);
     list.printForward(list.head);
 }
