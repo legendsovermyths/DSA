@@ -1,6 +1,9 @@
 #include <iostream>
 #include <algorithm>
+#include <unordered_map>
+#include <list>
 using namespace std;
+
 int smallest(int x, int y, int z)
 {
 
@@ -17,6 +20,7 @@ int smallest(int x, int y, int z)
 }
 int primitiveCalculator(int n)
 {
+    unordered_map<int, int> umap;
     int dpVec[n + 1];
     dpVec[0] = 0;
     for (int i = 1; i <= n; i++)
@@ -38,9 +42,10 @@ int primitiveCalculator(int n)
             dpVec[i] = dpVec[i - 1] + 1;
         }
     }
+    cout << dpVec[n - 1] << endl;
     return dpVec[n - 1];
 }
 int main()
 {
-    cout << primitiveCalculator(5);
+    primitiveCalculator(96234);
 }

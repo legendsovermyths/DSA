@@ -18,6 +18,7 @@ int smallest(int x, int y, int z)
 int moneyChange(int number)
 {
     int dpArr[number];
+
     dpArr[0] = 0;
     for (int i = 1; i <= number; i++)
     {
