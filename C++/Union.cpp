@@ -3,16 +3,22 @@
 using namespace std;
 int Union(int num1, int num2, int arr1[], int arr2[])
 {
-    int checker = num1;
+    int checker = 0;
     unordered_map<int, int> umap;
     for (int i = 0; i < num1; i++)
     {
+        if (umap[arr1[i]])
+        {
+            checker -= 1;
+        }
         umap[arr1[i]] = 1;
+        checker += 1;
     }
     for (int i = 0; i < num2; i++)
     {
         if (!umap[arr2[i]])
         {
+            umap[arr2[i]] = 1;
             checker += 1;
         }
     }
