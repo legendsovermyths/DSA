@@ -7,7 +7,7 @@ int solution(int m, int n, int val[], int wt[])
     {
         for (int j = 1; j <= n; j++)
         {
-            if (val[i - 1] <= j)
+            if (wt[i - 1] <= j)
             {
                 arr[i][j] = max(arr[i - 1][j], arr[i - 1][j - wt[i - 1]] + val[i - 1]);
             }
@@ -17,19 +17,30 @@ int solution(int m, int n, int val[], int wt[])
             }
         }
     }
-    for (int i = i; i <= m; i++)
-    {
-        for (int j = 1; j <= n; j++)
-        {
-            cout << arr[i][j] << " ";
-        }
-        cout << "\n";
-    }
+
     return arr[m][n];
 }
 int main()
 {
-    int val[] = {1, 2, 3};
-    int wt[] = {4, 5, 1};
-    solution(3, 4, val, wt);
+    int test;
+    cin >> test;
+    while (test--)
+    {
+        int m;
+        cin >> m;
+        int n;
+        cin >> n;
+        int val[m];
+        for (int i = 0; i < m; i++)
+        {
+            cin >> val[i];
+        }
+        int wt[m];
+        for (int j = 0; j < m; j++)
+        {
+            cin >> wt[j];
+        }
+
+        cout << solution(m, n, val, wt) << endl;
+    }
 }
