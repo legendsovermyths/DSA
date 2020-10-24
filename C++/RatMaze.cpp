@@ -40,7 +40,7 @@ bool isValid(int i, int j, bool isVisted, int n, int m[MAX][MAX])
 string Path(int i, int j, int m[MAX][MAX], bool isVisited, string step, int n)
 {
     if (!isValid(i, j, isVisited, n, m))
-        return "";
+        return " ";
     if (i == n - 1 && j == n - 1)
         return step;
     isVisited = true;
