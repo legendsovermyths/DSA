@@ -75,5 +75,6 @@
         "valarray": "cpp",
         "variant": "cpp"
     },
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "C_Cpp.errorSquiggles": "Enabled"
 }
