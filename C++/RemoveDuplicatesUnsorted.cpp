@@ -1,4 +1,4 @@
-// { Driver Code Starts
+#include <unordered_map>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -59,17 +59,29 @@ int main()
 }
 Node *removeDuplicates(Node *head)
 {
+
     Node *start = head;
-    while (start && start->next)
+    unordered_map<int, int> umap;
+    while (start)
     {
-        if (start->data == start->next->data)
+
+        umap[start->data] = +1;
+        start = start->next;
+    }
+    Node *curr = new Node(INT16_MAX);
+    curr->next = head;
+    while (curr && curr->next)
+    {
+
+        if (umap[curr->next->data] >= 1)
         {
-            start = start->next;
+            curr = curr->next;
+            umap[curr->data] = 0;
         }
         else
         {
-            start = start->next;
+            curr->next = curr->next->next;
         }
     }
-    return root;
+    return head;
 }
