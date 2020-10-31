@@ -18,10 +18,11 @@ int solution(int eggs, int floors)
             }
             else
             {
-                dp[i][j] = INT32_MAX;
+                dp[i][j] = INT16_MAX;
                 for (int k = 1; k <= j; k++)
                 {
                     int res = 1 + max(dp[i - 1][k - 1], dp[i][j - k]);
+                    cout << res << endl;
                     if (res < dp[i][j])
                     {
                         dp[i][j] = res;

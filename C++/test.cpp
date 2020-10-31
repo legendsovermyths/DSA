@@ -25,6 +25,14 @@ int shortestPath(vector<vector<int>> &vact, int i, int j, int x, int y, vector<v
 }
 int main()
 {
+    for (int s = 1; s < 4; s++)
+    {
+        for (int i = 1; i <= numberToBeMade; i++)
+        {
+            cout << dpValues[s][i] << " ";
+        }
+        cout << "\n";
+    }
 
     vector<vector<int>> vact{
         {1, 0, 0, 0},
