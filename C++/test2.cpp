@@ -24,3 +24,10 @@ int main()
     item1.weight = 2;
     cout << item1.valuePerWeight;
 }
+void print()
+{
+    cout << "Hello";
+    void print_2()
+    {
+        }
+}
