@@ -23,14 +23,7 @@ int Maximize(int arrOfNumbers[], int numberToBeMade)
             }
         }
     }
-    for (int s = 1; s < 4; s++)
-    {
-        for (int i = 1; i <= numberToBeMade; i++)
-        {
-            cout << dpValues[s][i] << " ";
-        }
-        cout << "\n";
-    }
+  
     return dpValues[3][numberToBeMade];
 }
 int main()

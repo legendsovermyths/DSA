@@ -8,16 +8,19 @@ bool isValid(vector<vector<int>> &vact, int i, int j, vector<vector<bool>> &vis)
     int cols = vact[0].size();
     return i < row && j < cols && !vis[i][j] && vact[i][j] == 1 && i >= 0 && j >= 0;
 }
+class item
+{
+public:
+    int index = 0;
+    int weight = 1;
+    int value = 1;
+    int valuePerWeight = value / weight;
+};
 int main()
 {
-
-    vector<vector<int>> vact{
-        {1, 0, 0, 0},
-        {1, 1, 0, 1},
-        {0, 1, 1, 1}};
-
-    vector<vector<bool>> vis(3, vector<bool>(4, 0));
-    vis[2][3] = 1;
-    cout << isValid(vact, 0, 0, vis);
-    cout << vis[0][0] << " " << vis[2][3];
+    item item1;
+    item1.index = 1;
+    item1.value = 100;
+    item1.weight = 2;
+    cout << item1.valuePerWeight;
 }
