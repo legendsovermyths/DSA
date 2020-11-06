@@ -1,57 +1,39 @@
 #include <bits/stdc++.h>
+#include <queue>
 using namespace std;
-
-struct Node
+class Node
 {
+public:
     int data;
-    struct Node *left;
-    struct Node *right;
-
-    // val is the key or the value that
-    // has to be added to the data part
-    Node(int val)
-    {
-        data = val;
-
-        // Left and right child for node
-        // will be initialized to null
-        left = NULL;
-        right = NULL;
-    }
+    Node *left = NULL;
+    Node *right = NULL;
 };
+Node *CreateNode(int data)
+{
+    Node *newNode = new Node();
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+Node *insertNode(int data, Node *temp)
+{
+}
+void inorder(Node *temp)
+{
 
+    if (temp == NULL)
+        return;
+    inorder(temp->left);
+    cout << temp->data << ' ';
+    inorder(temp->right);
+}
 int main()
 {
-
-    /*create root*/
-    struct Node *root = new Node(1);
-    /* following is the tree after above statement 
-  
-             1 
-            / \ 
-            NULL NULL 
-    */
-
-    root->left = new Node(2);
-    root->right = new Node(3);
-    /* 2 and 3 become left and right children of 1 
-                    1 
-                    / \ 
-                   2     3 
-                  / \    /  \ 
-               NULL NULL NULL NULL 
-    */
-
-    root->left->left = new Node(4);
-    /* 4 becomes left child of 2 
-               1 
-            /    \ 
-            2     3 
-            / \  / \ 
-    4 NULL NULL NULL 
-    / \ 
-    NULL NULL 
-    */
-
-    return 0;
+    Node *root = CreateNode(10);
+    root->left = CreateNode(11);
+    root->left->left = CreateNode(7);
+    root->right = CreateNode(9);
+    root->right->left = CreateNode(15);
+    root->right->right = CreateNode(8);
+    inorder(root);
 }
