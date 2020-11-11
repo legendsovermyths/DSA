@@ -56,43 +56,36 @@ void inorder(Node *temp)
 }
 void deleteDeepest(Node *root, Node *d_node)
 {
+
+    queue<Node *> q;
+    q.push(root);
+    struct Node *temp;
+    while (!q.empty())
     {
-        queue<Node *> q;
-        q.push(root);
-        struct Node *temp;
-        while (!q.empty())
+        temp = q.front();
+        q.pop();
+        if (temp->right)
         {
-            temp = q.front();
-            q.pop();
-            if (temp == d_node)
+            if (temp->right == d_node)
             {
-                temp = NULL;
+                temp->right = NULL;
                 delete (d_node);
                 return;
             }
-            if (temp->right)
-            {
-                if (temp->right == d_node)
-                {
-                    temp->right = NULL;
-                    delete (d_node);
-                    return;
-                }
-                else
-                    q.push(temp->right);
-            }
+            else
+                q.push(temp->right);
+        }
 
-            if (temp->left)
+        if (temp->left)
+        {
+            if (temp->left == d_node)
             {
-                if (temp->left == d_node)
-                {
-                    temp->left = NULL;
-                    delete (d_node);
-                    return;
-                }
-                else
-                    q.push(temp->left);
+                temp->left = NULL;
+                delete (d_node);
+                return;
             }
+            else
+                q.push(temp->left);
         }
     }
 }
@@ -142,7 +135,7 @@ Node *deletion(int key, Node *root)
 }
 int main()
 {
-    struct Node *root = CreateNode(10);
+    Node *root = CreateNode(10);
     root->left = CreateNode(11);
     root->left->left = CreateNode(7);
     root->left->right = CreateNode(12);
