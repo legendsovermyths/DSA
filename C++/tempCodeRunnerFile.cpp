@@ -1,8 +1,13 @@
-for (int s = 0; s < operands.size(); s++)
-    {
-        for (int i = 0; i < operands.size(); i++)
+{
+        if (node == NULL)
+            return 0;
+        else
         {
-            cout << vecM[s][i] << " ";
+            int lheight = height(node->left);
+            int rheight = height(node->right);
+            if (lheight > rheight)
+                return (1 + lheight);
+            else
+                return (1 + rheight);
         }
-        cout << "\n";
     }
