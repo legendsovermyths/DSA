@@ -19,7 +19,16 @@ int solutionUtil(int i, int j, vector<vector<int>> &M, int N1, int N2, int xMove
 {
     int k, next_x, next_y;
     if (moves == N1 * N2)
+    {
+        for (int x = 0; x < N1; x++)
+        {
+            for (int y = 0; y < N2; y++)
+                cout << setw(2) << M[x][y] << " ";
+            cout << endl;
+        }
         return 1;
+    }
+
     for (int k = 0; k < 8; k++)
     {
         next_x = i + xMove[k];
@@ -30,7 +39,6 @@ int solutionUtil(int i, int j, vector<vector<int>> &M, int N1, int N2, int xMove
 
             if (solutionUtil(next_x, next_y, M, N1, N2, xMove, yMove, moves + 1) == 1)
             {
-
                 return 1;
             }
             else
@@ -57,8 +65,8 @@ void solution(int i, int j, vector<vector<int>> &M, int N1, int N2)
 
 int main()
 {
-    int m = 8, n = 8;
+    int m = 6, n = 6;
     vector<vector<int>> vec(n, vector<int>(m, -1));
     vec[0][0] = 0;
-    solution(0, 0, vec, 8, 8);
+    solution(0, 0, vec, 6, 6);
 };

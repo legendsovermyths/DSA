@@ -10,7 +10,7 @@ bool isValid(vector<vector<int>> &vact, int i, int j, vector<vector<bool>> &vis)
     int cols = vact[0].size();
     return i >= 0 && j >= 0 && i < row && j < cols && vact[i][j] == 1 && !vis[i][j];
 }
-bool SolutionUtil(vector<int> &length, vector<vector<int>> &vact, vector<vector<bool>> &vis, int i, int j, int x, int y, int steps, int move_i[], int move_j[])
+int SolutionUtil(vector<int> &length, vector<vector<int>> &vact, vector<vector<bool>> &vis, int i, int j, int x, int y, int steps, int move_i[], int move_j[])
 {
     cout << "i: " << i << endl;
     cout << "j: " << j << endl;
@@ -27,7 +27,6 @@ bool SolutionUtil(vector<int> &length, vector<vector<int>> &vact, vector<vector<
         }
         return 1;
     }
-    bool res = false;
     for (int k = 0; k < 4; k++)
     {
         int next_i = i + move_i[k];
@@ -35,11 +34,19 @@ bool SolutionUtil(vector<int> &length, vector<vector<int>> &vact, vector<vector<
         if (isValid(vact, next_i, next_j, vis))
         {
             vis[next_i][next_j] = true;
-            res = SolutionUtil(length, vact, vis, next_i, next_j, x, y, steps + 1, move_i, move_j) || res;
-            vis[next_i][next_j] = false;
+            int next_step = steps + 1;
+            if (SolutionUtil(length, vact, vis, next_i, next_j, x, y, next_step, move_i, move_j) == 1)
+            {
+                vis[next_i][next_j] = false;
+            }
+            else
+            {
+
+                vis[next_i][next_j] = false;
+            }
         }
     }
-    return res;
+    return 0;
 }
 int Solution(vector<vector<int>> &vact, vector<vector<bool>> &vis, int i, int j, int x, int y, vector<int> &length)
 {
