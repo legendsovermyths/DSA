@@ -42,6 +42,46 @@ int main()
 
 // m is the given matrix and n is the order of matrix
 // MAX is the upper limit of N ie 5
+
+bool isValid(int m[MAX][MAX], int N, int i, int j, vector<vector<bool>> &vis)
+{
+    int row = N;
+    int cols = N;
+    return i >= 0 && j >= 0 && i < row && j < cols && m[i][j] == 1 && !vis[i][j];
+}
+bool SolutionUtil(int m[MAX][MAX], int N, int i, int j, vector<vector<bool>> &vis, string solution, int x_moves[], int y_moves[], char moves[], vector<string> &sol2)
+{
+    if (i == N - 1 && j == N - 1)
+    {
+        sol2.push_back(solution);
+        return 1;
+    }
+    bool res = false;
+    for (int k = 0; k < 4; k++)
+    {
+        int next_x = i + x_moves[k];
+        int next_y = j + y_moves[k];
+
+        if (isValid(m, N, next_x, next_y, vis))
+        {
+            string sol = solution + moves[k];
+            vis[next_x][next_y] = true;
+            res = SolutionUtil(m, N, next_x, next_y, vis, sol, x_moves, y_moves, moves, sol2) || res;
+            vis[next_x][next_y] = false;
+        }
+    }
+    return res;
+}
 vector<string> printPath(int m[MAX][MAX], int n)
 {
+    vector<string> v;
+    int x_moves[] = {1, 0, -1, 0};
+    int y_moves[] = {0, 1, 0, -1};
+    char moves[] = {'D', 'R', 'U', 'L'};
+    string solution = "";
+    vector<vector<bool>> vis(n, vector<bool>(n, 0));
+    vis[0][0] = 1;
+    SolutionUtil(m, n, 0, 0, vis, solution, x_moves, y_moves, moves, v);
+
+    return v;
 }
