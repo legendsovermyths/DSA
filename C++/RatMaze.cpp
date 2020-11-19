@@ -57,6 +57,7 @@ bool SolutionUtil(int m[MAX][MAX], int N, int i, int j, vector<vector<bool>> &vi
         return 1;
     }
     bool res = false;
+    vis[i][j] = true;
     for (int k = 0; k < 4; k++)
     {
         int next_x = i + x_moves[k];
@@ -64,20 +65,21 @@ bool SolutionUtil(int m[MAX][MAX], int N, int i, int j, vector<vector<bool>> &vi
 
         if (isValid(m, N, next_x, next_y, vis))
         {
-            string sol = solution + moves[k];
-            vis[next_x][next_y] = true;
-            res = SolutionUtil(m, N, next_x, next_y, vis, sol, x_moves, y_moves, moves, sol2) || res;
-            vis[next_x][next_y] = false;
+
+            solution.push_back(moves[k]);
+            res = SolutionUtil(m, N, next_x, next_y, vis, solution, x_moves, y_moves, moves, sol2) || res;
+            solution.pop_back();
         }
     }
+    vis[i][j] = false;
     return res;
 }
 vector<string> printPath(int m[MAX][MAX], int n)
 {
     vector<string> v;
-    int x_moves[] = {1, 0, -1, 0};
-    int y_moves[] = {0, 1, 0, -1};
-    char moves[] = {'D', 'R', 'U', 'L'};
+    int x_moves[] = {1, 0, 0, -1};
+    int y_moves[] = {0, -1, 1, 0};
+    char moves[] = {'D', 'L', 'R', 'U'};
     string solution = "";
     vector<vector<bool>> vis(n, vector<bool>(n, 0));
     vis[0][0] = 1;

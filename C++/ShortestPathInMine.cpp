@@ -55,7 +55,11 @@ void Solution(vector<vector<int>> &vact, vector<vector<bool>> &vis, int i, int j
     vis[i][j] = 1;
     int move_i[] = {0, 0, -1, 1};
     int move_j[] = {1, -1, 0, 0};
-    if (SolutionUtil(length, vact, vis, i, j, x, y, steps, move_i, move_j, cnt, solutions) == 1)
+    if (vact[0][0] == 0)
+    {
+        cout << -1 << endl;
+    }
+    else if (SolutionUtil(length, vact, vis, i, j, x, y, steps, move_i, move_j, cnt, solutions) == 1)
     {
         min = *min_element(solutions.begin(), solutions.end());
         cout << min << endl;

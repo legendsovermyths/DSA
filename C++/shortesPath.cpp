@@ -43,7 +43,7 @@ int main()
         cin >> x >> y;
         vector<vector<bool>> vis(rows, vector<bool>(cols, 0));
         int answer = shortestPath(vact, 0, 0, x, y, vis);
-        if (answer > 9999)
+        if (answer >= 9999)
         {
             cout << -1 << endl;
         }
