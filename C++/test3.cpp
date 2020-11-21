@@ -1,38 +1,155 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-class Node
+
+// UNASSIGNED is used for empty
+// cells in sudoku grid
+#define UNASSIGNED 0
+
+// N is used for the size of Sudoku grid.
+// Size will be NxN
+#define N 9
+
+// This function finds an entry in grid
+// that is still unassigned
+bool FindUnassignedLocation(int grid[N][N],
+                            int &row, int &col);
+
+// Checks whether it will be legal
+// to assign num to the given row, col
+bool isSafe(int grid[N][N], int row,
+            int col, int num);
+
+/* Takes a partially filled-in grid and attempts  
+to assign values to all unassigned locations in  
+such a way to meet the requirements for 
+Sudoku solution (non-duplication across rows, 
+columns, and boxes) */
+bool SolveSudoku(int grid[N][N])
 {
-public:
-    int data;
-    Node *link = NULL;
-    Node(int key)
+    int row, col;
+
+    // If there is no unassigned location,
+    // we are done
+    if (!FindUnassignedLocation(grid, row, col))
+        // success!
+        return true;
+
+    // Consider digits 1 to 9
+    for (int num = 1; num <= 9; num++)
     {
-        data = key;
+
+        // Check if looks promising
+        if (isSafe(grid, row, col, num))
+        {
+
+            // Make tentative assignment
+            grid[row][col] = num;
+
+            // Return, if success
+            if (SolveSudoku(grid))
+                return true;
+
+            // Failure, unmake & try again
+            grid[row][col] = UNASSIGNED;
+        }
     }
-};
-void printList(Node *root)
-{
-    Node *temp = root;
-    while (temp != NULL)
-    {
-        cout << temp->data << " ";
-        temp = temp->link;
-    }
-    return;
+
+    // This triggers backtracking
+    return false;
 }
+
+/* Searches the grid to find an entry that is  
+still unassigned. If found, the reference  
+parameters row, col will be set the location  
+that is unassigned, and true is returned.  
+If no unassigned entries remain, false is returned. */
+bool FindUnassignedLocation(int grid[N][N],
+                            int &row, int &col)
+{
+    for (row = 0; row < N; row++)
+        for (col = 0; col < N; col++)
+            if (grid[row][col] == UNASSIGNED)
+                return true;
+    return false;
+}
+
+/* Returns a boolean which indicates whether  
+an assigned entry in the specified row matches 
+the given number. */
+bool UsedInRow(int grid[N][N], int row, int num)
+{
+    for (int col = 0; col < N; col++)
+        if (grid[row][col] == num)
+            return true;
+    return false;
+}
+
+/* Returns a boolean which indicates whether  
+an assigned entry in the specified column 
+matches the given number. */
+bool UsedInCol(int grid[N][N], int col, int num)
+{
+    for (int row = 0; row < N; row++)
+        if (grid[row][col] == num)
+            return true;
+    return false;
+}
+
+/* Returns a boolean which indicates whether  
+an assigned entry within the specified 3x3 box  
+matches the given number. */
+bool UsedInBox(int grid[N][N], int boxStartRow,
+               int boxStartCol, int num)
+{
+    for (int row = 0; row < 3; row++)
+        for (int col = 0; col < 3; col++)
+            if (grid[row + boxStartRow]
+                    [col + boxStartCol] ==
+                num)
+                return true;
+    return false;
+}
+
+/* Returns a boolean which indicates whether  
+it will be legal to assign num to the given  
+row, col location. */
+bool isSafe(int grid[N][N], int row,
+            int col, int num)
+{
+    /* Check if 'num' is not already placed in  
+    current row, current column  
+    and current 3x3 box */
+    return !UsedInRow(grid, row, num) && !UsedInCol(grid, col, num) && !UsedInBox(grid, row - row % 3, col - col % 3, num) && grid[row][col] == UNASSIGNED;
+}
+
+/* A utility function to print grid */
+void printGrid(int grid[N][N])
+{
+    for (int row = 0; row < N; row++)
+    {
+        for (int col = 0; col < N; col++)
+            cout << grid[row][col] << " ";
+        cout << endl;
+    }
+}
+
+// Driver Code
 int main()
 {
-    Node *root = new Node(4);
-    root->link = new Node(6);
-    root->link->link = new Node(8);
-    root->link->link->link = new Node(10);
-    root->link->link->link->link = new Node(12);
-    printList(root);
-    Node *root2 = new Node(13);
-    root2->link = new Node(61);
-    root2->link->link = new Node(81);
-    root2->link->link->link = new Node(101);
-    root2->link->link->link->link = new Node(121);
-    root = root2;
-    printList(root);
+    // 0 means unassigned cells
+    int grid[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
+                      {5, 2, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 8, 7, 0, 0, 0, 0, 3, 1},
+                      {0, 0, 3, 0, 1, 0, 0, 8, 0},
+                      {9, 0, 0, 8, 6, 3, 0, 0, 5},
+                      {0, 5, 0, 0, 9, 0, 6, 0, 0},
+                      {1, 3, 0, 0, 0, 0, 2, 5, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 7, 4},
+                      {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+    if (SolveSudoku(grid) == true)
+        printGrid(grid);
+    else
+        cout << "No solution exists";
+
+    return 0;
 }

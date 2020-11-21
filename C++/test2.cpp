@@ -1,20 +1,24 @@
 /* C/C++ program to solve N Queen Problem using
 backtracking */
 #include <bits/stdc++.h>
-#define N 6
+using namespace std;
+#define N 9
 
 /* A utility function to print solution */
 void printSolution(int board[N][N])
 {
-    static int k = 1;
-    printf("%d-\n", k++);
+    cout << "[";
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
-            printf(" %d ", board[i][j]);
-        printf("\n");
+        {
+            if (board[i][j] == 1)
+            {
+                cout << j + 1 << " ";
+            }
+        }
     }
-    printf("\n");
+    cout << "] ";
 }
 
 /* A utility function to check if a queen can

@@ -6,34 +6,38 @@
 using namespace std;
 void printSol(vector<vector<int>> &placed)
 {
-    static int k = 1;
-    cout << k++ << "-" << endl;
+    cout << "[";
     for (int i = 0; i < placed.size(); i++)
     {
         for (int j = 0; j < placed[1].size(); j++)
         {
-            cout << placed[i][j] << " ";
+            if (placed[j][i] == 1)
+            {
+                cout << j + 1 << " ";
+            }
         }
-        cout << "\n";
     }
+    cout << "] ";
+    return;
 }
 bool isValid(vector<vector<int>> &placed, int Row, int Col, int siz)
 {
-    for (int i = Row, j = Col; i >= 0 && j >= 0; i--, j--)
+    int i, j;
+    for (i = Row, j = Col; i >= 0 && j >= 0; i--, j--)
     {
         if (placed[i][j])
         {
             return false;
         }
     }
-    for (int i = Row, j = Col; i < siz && j >= 0; j--, i++)
+    for (i = Row, j = Col; i < siz && j >= 0; j--, i++)
     {
         if (placed[i][j])
         {
             return false;
         }
     }
-    for (int i = 0; i < Col; i++)
+    for (i = 0; i < Col; i++)
     {
         if (placed[Row][i])
         {
@@ -63,15 +67,28 @@ int SolutionUtil(vector<vector<int>> &placed, int Col, int N)
 }
 void solution(vector<vector<int>> &placed, int N)
 {
+    if (N == 1)
+    {
+        cout << "[1 ]" << endl;
+        return;
+    }
     if (SolutionUtil(placed, 0, N) == 0)
     {
         cout << -1 << endl;
         return;
     }
+    return;
 }
 int main()
 {
-    int n = 8;
-    vector<vector<int>> placed(n, vector<int>(n, 0));
-    solution(placed, n);
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        vector<vector<int>> placed(n, vector<int>(n, 0));
+        solution(placed, n);
+    }
+    return 0;
 }

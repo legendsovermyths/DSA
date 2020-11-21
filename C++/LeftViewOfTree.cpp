@@ -128,34 +128,28 @@ struct Node
  */
 
 // A wrapper over leftViewUtil()
+
 vector<int> leftView(Node *root)
 {
-    vector<int> vec;
+
+    vector<int> solution;
     if (root == NULL)
     {
-        return vec;
+        return solution;
     }
-    else if (root->left == NULL && root->right == NULL)
+    Node *temp = root;
+    queue<Node *> q;
+    q.push(root);
+    solution.push_back(root->data);
+    while (!q.empty())
     {
-        return vec;
-    }
-    else
-    {
-        Node *temp = root;
-        vec.push_back(root->data);
-        while (temp->left != NULL || temp->right != NULL)
+        temp = q.front();
+        if (temp)
         {
-            if (temp->left)
+            while (q.front())
             {
-                vec.push_back(temp->left->data);
-                temp = temp->left;
-            }
-            else
-            {
-                vec.push_back(temp->right->data);
-                temp = temp->right;
-            }
+                        }
         }
-        return (vec);
     }
+    return solution;
 }

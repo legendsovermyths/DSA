@@ -45,6 +45,53 @@ Node *insertNode(int data, Node *root)
     }
     return root;
 }
+int height(struct Node *node)
+{
+    if (node == NULL)
+        return 0;
+    else
+    {
+        int lheight = height(node->left);
+        int rheight = height(node->right);
+        if (lheight > rheight)
+            return (1 + lheight);
+        else
+            return (1 + rheight);
+    }
+}
+void levelOrder(Node *root)
+{
+    queue<Node *> q;
+    Node *temp;
+    int level = height(root);
+    int MinLevel = level;
+    q.push(root);
+    cout << root->data << " ";
+    while (!q.empty())
+    {
+        temp = q.front();
+        q.pop();
+
+        if (temp->left)
+        {
+            level = height(temp->left);
+            q.push(temp->left);
+            if (level < MinLevel)
+            {
+                cout << temp->left->data << " ";
+                MinLevel = level;
+            }
+        }
+        if (temp->right)
+        {
+            q.push(temp->right);
+            if (level < MinLevel)
+            {
+                MinLevel = level;
+            }
+        }
+    }
+}
 void inorder(Node *temp)
 {
 
@@ -135,22 +182,20 @@ Node *deletion(int key, Node *root)
 }
 int main()
 {
-    Node *root = CreateNode(10);
-    root->left = CreateNode(11);
-    root->left->left = CreateNode(7);
-    root->left->right = CreateNode(12);
-    root->right = CreateNode(9);
-    root->right->left = CreateNode(15);
-    root->right->right = CreateNode(8);
+    Node *root = CreateNode(1);
+    root->left = CreateNode(2);
+    root->right = CreateNode(3);
+    root->left->left = CreateNode(4);
+    root->left->right = CreateNode(5);
 
-    cout << "Inorder traversal before deletion : ";
-    inorder(root);
-    int key = 11;
-    root = deletion(key, root);
+    // cout << "Inorder traversal before deletion : ";
+    // levelOrder(root);
+    // int key = 11;
+    // root = deletion(key, root);
 
-    cout << endl;
-    cout << "Inorder traversal after deletion : ";
-    inorder(root);
+    // cout << endl;
+    // cout << "Inorder traversal after deletion : ";
+    levelOrder(root);
 
     return 0;
 }
