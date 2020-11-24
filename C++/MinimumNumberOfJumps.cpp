@@ -44,6 +44,10 @@ int minJumps(int arr[], int n)
             solutionDp[i] = 1;
         }
     }
+    for (int i = 0; i < n; i++)
+    {
+        cout << solutionDp[i] << " ";
+    }
     if (solutionDp[0] == 1 || solutionDp[0] == 0)
     {
         return -1;

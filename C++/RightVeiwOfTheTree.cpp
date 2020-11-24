@@ -9,9 +9,6 @@ struct Node
     Node *left;
     Node *right;
 };
-
-vector<int> leftView(struct Node *root);
-
 // Utility function to create a new Tree Node
 Node *newNode(int val)
 {
@@ -22,6 +19,8 @@ Node *newNode(int val)
 
     return temp;
 }
+
+vector<int> rightView(struct Node *root);
 
 // Function to Build Tree
 Node *buildTree(string str)
@@ -38,9 +37,6 @@ Node *buildTree(string str)
     for (string str; iss >> str;)
         ip.push_back(str);
 
-    // for(string i:ip)
-    //     cout<<i<<" ";
-    // cout<<endl;
     // Create the root of the tree
     Node *root = newNode(stoi(ip[0]));
 
@@ -96,15 +92,20 @@ Node *buildTree(string str)
 int main()
 {
     int t;
-    scanf("%d ", &t);
+    string tc;
+    getline(cin, tc);
+    t = stoi(tc);
     while (t--)
     {
         string s;
         getline(cin, s);
         Node *root = buildTree(s);
-        vector<int> vec = leftView(root);
+
+        vector<int> vec = rightView(root);
         for (int x : vec)
+        {
             cout << x << " ";
+        }
         cout << endl;
     }
     return 0;
@@ -112,8 +113,8 @@ int main()
 
 // } Driver Code Ends
 
-/* A binary tree node
-
+/* A binary tree node has data, pointer to left child
+   and a pointer to right child 
 struct Node
 {
     int data;
@@ -124,10 +125,9 @@ struct Node
         data = x;
         left = right = NULL;
     }
-};
- */
+}; */
 
-// A wrapper over leftViewUtil()
+// Should return  right view of tree
 void levelorderRecursive(Node *root, int height, int &currHeight)
 {
     if (root == NULL)
@@ -138,18 +138,18 @@ void levelorderRecursive(Node *root, int height, int &currHeight)
     {
         return;
     }
-    if (root->left && height < currHeight)
-    {
-        cout << root->left->data << " ";
-        currHeight = height;
-    }
-    else if (root->right && height < currHeight)
+    if (root->right && height < currHeight)
     {
         cout << root->right->data << " ";
         currHeight = height;
     }
-    levelorderRecursive(root->left, height - 1, currHeight);
+    else if (root->left && height < currHeight)
+    {
+        cout << root->left->data << " ";
+        currHeight = height;
+    }
     levelorderRecursive(root->right, height - 1, currHeight);
+    levelorderRecursive(root->left, height - 1, currHeight);
 }
 int height(Node *root)
 {
@@ -165,16 +165,15 @@ int height(Node *root)
     }
     return rheight + 1;
 }
-
-vector<int> leftView(Node *root)
+vector<int> rightView(Node *root)
 {
-    vector<int> jh;
+    vector<int> useless;
     if (root == NULL)
     {
-        return jh;
+        return useless;
     }
     cout << root->data << " ";
-    int heigt = height(root);
-    levelorderRecursive(root, height(root) - 1, heigt);
-    return jh;
+    int h = height(root);
+    levelorderRecursive(root, height(root) - 1, h);
+    return useless;
 }

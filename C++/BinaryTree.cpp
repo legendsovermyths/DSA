@@ -8,7 +8,7 @@ public:
     Node *left = NULL;
     Node *right = NULL;
 };
-Node *CreateNode(int data)
+Node *newNode(int data)
 {
     Node *newNode = new Node();
     newNode->data = data;
@@ -19,7 +19,7 @@ Node *insertNode(int data, Node *root)
 {
     if (root == NULL)
     {
-        root = CreateNode(data);
+        root = newNode(data);
         return root;
     }
     queue<Node *> q;
@@ -32,14 +32,14 @@ Node *insertNode(int data, Node *root)
             q.push(temp->right);
         else
         {
-            temp->right = CreateNode(data);
+            temp->right = newNode(data);
             return root;
         }
         if (temp->left != NULL)
             q.push(temp->left);
         else
         {
-            temp->left = CreateNode(data);
+            temp->left = newNode(data);
             return root;
         }
     }
@@ -71,26 +71,75 @@ void levelOrder(Node *root)
     {
         temp = q.front();
         q.pop();
-
         if (temp->left)
         {
-            level = height(temp->left);
+            cout << temp->left->data << " ";
             q.push(temp->left);
-            if (level < MinLevel)
-            {
-                cout << temp->left->data << " ";
-                MinLevel = level;
-            }
         }
         if (temp->right)
         {
+            cout << temp->right->data << " ";
             q.push(temp->right);
-            if (level < MinLevel)
-            {
-                MinLevel = level;
-            }
         }
     }
+}
+void levelorderRecursive(Node *root, int height)
+{
+    if (height == 0)
+    {
+        return;
+    }
+    if (root->left)
+    {
+        cout << root->left->data << " ";
+    }
+    else if (root->right)
+    {
+        cout << root->right->data << " ";
+    }
+    levelorderRecursive(root->left, height - 1);
+    levelorderRecursive(root->right, height - 1);
+}
+void calculateMinMax(int &min, int &max, int hd, Node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    if (min > hd)
+    {
+        min = hd;
+    }
+    if (max < hd)
+    {
+        max = hd;
+    }
+    calculateMinMax(min, max, hd + 1, root->right);
+    calculateMinMax(min, max, hd - 1, root->left);
+}
+void printVerticalLine(int lineNo, Node *root, int hd)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    if (lineNo == hd)
+    {
+        cout << root->data << " ";
+    }
+    printVerticalLine(lineNo, root->left, hd - 1);
+    printVerticalLine(lineNo, root->right, hd + 1);
+}
+void verticalOrderTraversal(Node *root)
+{
+    int min = 0, max = -1;
+    calculateMinMax(min, max, 0, root);
+    for (int lineNo = min; lineNo <= max; lineNo++)
+    {
+        printVerticalLine(lineNo, root, 0);
+        cout << endl;
+    }
+    return;
 }
 void inorder(Node *temp)
 {
@@ -182,11 +231,15 @@ Node *deletion(int key, Node *root)
 }
 int main()
 {
-    Node *root = CreateNode(1);
-    root->left = CreateNode(2);
-    root->right = CreateNode(3);
-    root->left->left = CreateNode(4);
-    root->left->right = CreateNode(5);
+    Node *root = newNode(1);
+    root->left = newNode(2);
+    root->right = newNode(3);
+    root->left->left = newNode(4);
+    root->left->right = newNode(5);
+    root->right->left = newNode(6);
+    root->right->right = newNode(7);
+    root->right->left->right = newNode(8);
+    root->right->right->right = newNode(9);
 
     // cout << "Inorder traversal before deletion : ";
     // levelOrder(root);
@@ -195,7 +248,7 @@ int main()
 
     // cout << endl;
     // cout << "Inorder traversal after deletion : ";
-    levelOrder(root);
+    verticalOrderTraversal(root);
 
     return 0;
 }
