@@ -165,15 +165,63 @@ int height(Node *root)
     }
     return rheight + 1;
 }
+void calculateMinMax(int *min, int *max, Node *root, int hd)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    if (*min > hd)
+    {
+        *min = hd;
+    }
+    if (*max < hd)
+    {
+        *max = hd;
+    }
+    calculateMinMax(min, max, root->left, hd - 1);
+    calculateMinMax(min, max, root->right, hd + 1);
+}
+void printCurrentLine(Node *root, int hd, int line)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    if (hd == line)
+    {
+        cout << root->data << " ";
+    }
+    printCurrentLine(root->left, hd - 1, line);
+    printCurrentLine(root->right, hd + 1, line);
+}
+void verticalTraversal(Node *root)
+{
+    int max = -1, min = 0;
+    calculateMinMax(&min, &max, root, 0);
+
+    for (int line = min; line <= max; line++)
+    {
+        printCurrentLine(root, 0, line);
+        cout << endl;
+    }
+    return;
+}
+// vector<int> rightView(Node *root)
+// {
+//     vector<int> useless;
+//     if (root == NULL)
+//     {
+//         return useless;
+//     }
+//     cout << root->data << " ";
+//     int h = height(root);
+//     levelorderRecursive(root, height(root) - 1, h);
+//     return useless;
+// }
 vector<int> rightView(Node *root)
 {
     vector<int> useless;
-    if (root == NULL)
-    {
-        return useless;
-    }
-    cout << root->data << " ";
-    int h = height(root);
-    levelorderRecursive(root, height(root) - 1, h);
+    verticalTraversal(root);
     return useless;
 }

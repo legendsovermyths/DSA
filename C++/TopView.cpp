@@ -80,19 +80,19 @@ struct Node
     }
 };*/
 // function should print the topView of the binary tree
-void calculateMinMax(int &min, int &max, Node *root, int hd)
+void calculateMinMax(int *min, int *max, Node *root, int hd)
 {
     if (root == NULL)
     {
         return;
     }
-    if (min > hd)
+    if (*min > hd)
     {
-        min = hd;
+        *min = hd;
     }
-    if (max < hd)
+    if (*max < hd)
     {
-        max = hd;
+        *max = hd;
     }
     calculateMinMax(min, max, root->left, hd - 1);
     calculateMinMax(min, max, root->right, hd + 1);
@@ -106,18 +106,20 @@ void printCurrentLine(Node *root, int hd, int line)
     if (hd == line)
     {
         cout << root->data << " ";
-        return;
     }
     printCurrentLine(root->left, hd - 1, line);
     printCurrentLine(root->right, hd + 1, line);
 }
 void verticalTraversal(Node *root)
 {
-    int max = 0, min = -1;
-    calculateMinMax(min, max, root, 0);
+    int max = -1, min = 0;
+    calculateMinMax(&min, &max, root, 0);
+    cout << "min" << min << endl;
+    cout << "max" << max << endl;
     for (int line = min; line <= max; line++)
     {
         printCurrentLine(root, 0, line);
+        cout << endl;
     }
     return;
 }

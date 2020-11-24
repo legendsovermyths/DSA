@@ -85,15 +85,19 @@ void levelOrder(Node *root)
 }
 void levelorderRecursive(Node *root, int height)
 {
-    if (height == 0)
+    if (root == NULL)
     {
         return;
+    }
+    if (height == 0)
+    {
+        cout << root->data << " ";
     }
     if (root->left)
     {
         cout << root->left->data << " ";
     }
-    else if (root->right)
+    if (root->right)
     {
         cout << root->right->data << " ";
     }
@@ -248,7 +252,7 @@ int main()
 
     // cout << endl;
     // cout << "Inorder traversal after deletion : ";
-    verticalOrderTraversal(root);
+    levelorderRecursive(root, 0);
 
     return 0;
 }
