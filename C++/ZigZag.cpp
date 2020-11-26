@@ -120,39 +120,24 @@ struct Node {
 */
 
 // return a vector containing the zig zag level order traversal of the given tree
-void levelOrder(Node *root, int level)
+void printGivenLevel() {}
+void levelOrder(Node *root, map<Node *, pair<int, int>> &m, int level)
 {
     if (root == NULL)
     {
         return;
     }
-    if (level % 2 == 1)
+    if (root->left)
     {
-        if (root->right)
-            cout << root->right->data << " ";
-        if (root->left)
-            cout << root->left->data << " ";
-        levelOrder(root->right, level + 1);
-        levelOrder(root->left, level + 1);
+        m[root->left] = make_pair(level, root->left->data);
     }
-    else
+    if (root->right)
     {
-        if (root->left)
-            cout << root->left->data << " ";
-        if (root->right)
-            cout << root->right->data << " ";
-        levelOrder(root->left, level + 1);
-        levelOrder(root->right, level + 1);
+        m[root->right] = make_pair(level, root->right->data);
     }
+    levelOrder(root->left, m, level + 1);
+    levelOrder(root->right, m, level + 1);
 }
 vector<int> zigZagTraversal(Node *root)
 {
-    vector<int> useless;
-    if (root == NULL)
-    {
-        return useless;
-    }
-    cout << root->data << " ";
-    levelOrder(root, 1);
-    return useless;
 }

@@ -80,51 +80,57 @@ struct Node
     }
 };*/
 // function should print the topView of the binary tree
-void calculateMinMax(int *min, int *max, Node *root, int hd)
+void doSomethingWithTheMap(vector<pair<Node *, int>> &m, int min, int max)
 {
-    if (root == NULL)
+
+    for (int i = min; i <= max; i++)
     {
-        return;
-    }
-    if (*min > hd)
-    {
-        *min = hd;
-    }
-    if (*max < hd)
-    {
-        *max = hd;
-    }
-    calculateMinMax(min, max, root->left, hd - 1);
-    calculateMinMax(min, max, root->right, hd + 1);
-}
-void printCurrentLine(Node *root, int hd, int line)
-{
-    if (root == NULL)
-    {
-        return;
-    }
-    if (hd == line)
-    {
-        cout << root->data << " ";
-    }
-    printCurrentLine(root->left, hd - 1, line);
-    printCurrentLine(root->right, hd + 1, line);
-}
-void verticalTraversal(Node *root)
-{
-    int max = -1, min = 0;
-    calculateMinMax(&min, &max, root, 0);
-    cout << "min" << min << endl;
-    cout << "max" << max << endl;
-    for (int line = min; line <= max; line++)
-    {
-        printCurrentLine(root, 0, line);
-        cout << endl;
+        for (int j = 0; j < m.size(); j++)
+        {
+            if (m[j].second == i)
+            {
+                cout << m[j].first->data << " ";
+                break;
+            }
+        }
     }
     return;
 }
+void calculateMinMax(Node *root, int hd, int &min, int &max)
+{
+    if (root == NULL)
+        return;
+    if (hd < min)
+        min = hd;
+    if (hd > max)
+        max = hd;
+    calculateMinMax(root->left, hd - 1, min, max);
+    calculateMinMax(root->right, hd + 1, min, max);
+}
+void fillTheMap(Node *root, vector<pair<Node *, int>> &m, int hd)
+{
+    if (root == NULL)
+        return;
+    if (root->left)
+    {
+        m.push_back(make_pair(root->left, hd - 1));
+    }
+    if (root->right)
+    {
+        m.push_back(make_pair(root->right, hd + 1));
+    }
+
+    fillTheMap(root->left, m, hd - 1);
+    fillTheMap(root->right, m, hd + 1);
+}
 void topView(struct Node *root)
 {
-    verticalTraversal(root);
+    vector<pair<Node *, int>> m;
+    int min = 1, max = -1;
+    calculateMinMax(root, 0, min, max);
+    int hd = 0;
+    m.push_back(make_pair(root, 0));
+    fillTheMap(root, m, hd);
+    doSomethingWithTheMap(m, min, max);
     return;
 }
