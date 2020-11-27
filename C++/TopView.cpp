@@ -80,12 +80,22 @@ struct Node
     }
 };*/
 // function should print the topView of the binary tree
+int height(Node *root)
+{
+    if (root == NULL)
+        return 0;
+    int lheight = height(root->left);
+    int rheight = height(root->right);
+    if (lheight > rheight)
+        return lheight + 1;
+    return rheight + 1;
+}
 void doSomethingWithTheMap(vector<pair<Node *, int>> &m, int min, int max)
 {
 
     for (int i = min; i <= max; i++)
     {
-        for (int j = 0; j < m.size(); j++)
+        for (int j = m.size() - 1; j >= 0; j--)
         {
             if (m[j].second == i)
             {
@@ -107,21 +117,16 @@ void calculateMinMax(Node *root, int hd, int &min, int &max)
     calculateMinMax(root->left, hd - 1, min, max);
     calculateMinMax(root->right, hd + 1, min, max);
 }
-void fillTheMap(Node *root, vector<pair<Node *, int>> &m, int hd)
+void fillTheMap(Node *root, vector<pair<Node *, int>> &m, int hd, int level)
 {
     if (root == NULL)
         return;
-    if (root->left)
-    {
-        m.push_back(make_pair(root->left, hd - 1));
-    }
-    if (root->right)
-    {
-        m.push_back(make_pair(root->right, hd + 1));
-    }
+    if (level == 1)
 
-    fillTheMap(root->left, m, hd - 1);
-    fillTheMap(root->right, m, hd + 1);
+        m.push_back(make_pair(root, hd));
+
+    fillTheMap(root->left, m, hd - 1, level - 1);
+    fillTheMap(root->right, m, hd + 1, level - 1);
 }
 void topView(struct Node *root)
 {
@@ -129,8 +134,18 @@ void topView(struct Node *root)
     int min = 1, max = -1;
     calculateMinMax(root, 0, min, max);
     int hd = 0;
-    m.push_back(make_pair(root, 0));
-    fillTheMap(root, m, hd);
+    int heigh = height(root);
+    for (int i = 1; i <= heigh; i++)
+    {
+        fillTheMap(root, m, hd, i);
+    }
+
+    for (int i = 0; i < m.size(); i++)
+    {
+        cout << m[i].first->data << ": " << m[i].second << " ";
+    }
+    cout << "\n";
+    cout << heigh << endl;
     doSomethingWithTheMap(m, min, max);
     return;
 }

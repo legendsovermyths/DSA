@@ -1,21 +1,23 @@
 // { Driver Code Starts
-//Initial Template for C++
 #include <bits/stdc++.h>
 using namespace std;
 
 struct Node
 {
     int data;
-    Node *left;
-    Node *right;
-
-    Node(int val)
-    {
-        data = val;
-        left = right = NULL;
-    }
+    struct Node *left;
+    struct Node *right;
 };
+// Utility function to create a new Tree Node
+Node *newNode(int val)
+{
+    Node *temp = new Node;
+    temp->data = val;
+    temp->left = NULL;
+    temp->right = NULL;
 
+    return temp;
+}
 // Function to Build Tree
 Node *buildTree(string str)
 {
@@ -32,7 +34,7 @@ Node *buildTree(string str)
         ip.push_back(str);
 
     // Create the root of the tree
-    Node *root = new Node(stoi(ip[0]));
+    Node *root = newNode(stoi(ip[0]));
 
     // Push the root to the queue
     queue<Node *> queue;
@@ -55,7 +57,7 @@ Node *buildTree(string str)
         {
 
             // Create the left child for the current node
-            currNode->left = new Node(stoi(currVal));
+            currNode->left = newNode(stoi(currVal));
 
             // Push it to the queue
             queue.push(currNode->left);
@@ -72,7 +74,7 @@ Node *buildTree(string str)
         {
 
             // Create the right child for the current node
-            currNode->right = new Node(stoi(currVal));
+            currNode->right = newNode(stoi(currVal));
 
             // Push it to the queue
             queue.push(currNode->right);
@@ -83,10 +85,11 @@ Node *buildTree(string str)
     return root;
 }
 
-vector<int> zigZagTraversal(Node *root);
+bool isBalanced(Node *root);
 
 int main()
 {
+
     int t;
     scanf("%d ", &t);
     while (t--)
@@ -94,73 +97,55 @@ int main()
         string s;
         getline(cin, s);
         Node *root = buildTree(s);
-        vector<int> res = zigZagTraversal(root);
-        for (int i = 0; i < res.size(); i++)
-            cout << res[i] << " ";
-        cout << endl;
+        cout << isBalanced(root) << endl;
     }
-    return 0;
-}
-// Contributed by: Hashit Sidhwa
+    return 1;
+} // } Driver Code Ends
 
-// } Driver Code Ends
+/* A binary tree node structure
 
-//User function Template for C++
-/*Structure of the node of the binary tree is as
-struct Node {
+struct Node
+{
     int data;
-    Node *left;
-    Node *right;
-
-    Node(int val) {
-        data = val;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
         left = right = NULL;
     }
 };
-*/
-void printLevelForward(Node *root, int level)
-{
-    if (root == NULL)
-        return;
-    if (level == 1)
-        cout << root->data << " ";
-    printLevelForward(root->left, level - 1);
-    printLevelForward(root->right, level - 1);
-}
-void printLevelBackward(Node *root, int level)
-{
-    if (root == NULL)
-        return;
-    if (level == 1)
-        cout << root->data << " ";
-    printLevelBackward(root->right, level - 1);
-    printLevelBackward(root->left, level - 1);
-}
-int height(Node *root)
+ */
+
+// This function should return tree if passed  tree
+// is balanced, else false.
+int height(Node *root, vector<int> &vec)
 {
     if (root == NULL)
         return 0;
-    int lheight = height(root->left);
-    int rheight = height(root->right);
+    int lheight = height(root->left, vec);
+    int rheight = height(root->right, vec);
     if (lheight > rheight)
-        return lheight + 1;
-    return rheight + 1;
-}
-// return a vector containing the zig zag level order traversal of the given tree
-vector<int> zigZagTraversal(Node *root)
-{
-    vector<int> useless;
-    int heigh = height(root);
-    for (int i = 1; i <= heigh; i++)
     {
-        if (i % 2 == 0)
+        vec.push_back(lheight - rheight);
+        return lheight + 1;
+    }
+    else
+    {
+        vec.push_back(rheight - lheight);
+        return rheight + 1;
+    }
+}
+bool isBalanced(Node *root)
+{
+    vector<int> vec;
+    height(root, vec);
+    for (int i = 0; i < vec.size(); i++)
+    {
+        if (vec[i] > 1)
         {
-            printLevelBackward(root, i);
-        }
-        else
-        {
-            printLevelForward(root, i);
+            return false;
         }
     }
-    return useless;
+    return true;
 }

@@ -9,6 +9,9 @@ struct Node
     Node *left;
     Node *right;
 };
+
+vector<int> leftView(struct Node *root);
+
 // Utility function to create a new Tree Node
 Node *newNode(int val)
 {
@@ -19,8 +22,6 @@ Node *newNode(int val)
 
     return temp;
 }
-
-vector<int> rightView(struct Node *root);
 
 // Function to Build Tree
 Node *buildTree(string str)
@@ -37,6 +38,9 @@ Node *buildTree(string str)
     for (string str; iss >> str;)
         ip.push_back(str);
 
+    // for(string i:ip)
+    //     cout<<i<<" ";
+    // cout<<endl;
     // Create the root of the tree
     Node *root = newNode(stoi(ip[0]));
 
@@ -92,20 +96,15 @@ Node *buildTree(string str)
 int main()
 {
     int t;
-    string tc;
-    getline(cin, tc);
-    t = stoi(tc);
+    scanf("%d ", &t);
     while (t--)
     {
         string s;
         getline(cin, s);
         Node *root = buildTree(s);
-
-        vector<int> vec = rightView(root);
+        vector<int> vec = leftView(root);
         for (int x : vec)
-        {
             cout << x << " ";
-        }
         cout << endl;
     }
     return 0;
@@ -113,8 +112,8 @@ int main()
 
 // } Driver Code Ends
 
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child 
+/* A binary tree node
+
 struct Node
 {
     int data;
@@ -125,44 +124,18 @@ struct Node
         data = x;
         left = right = NULL;
     }
-}; */
+};
+ */
 
-// Should return  right view of tree
-void levelorderRecursive(Node *root, int height, int &currHeight)
-{
-    if (root == NULL)
-    {
-        return;
-    }
-    if (height == 0)
-    {
-        return;
-    }
-    if (root->right && height < currHeight)
-    {
-        cout << root->right->data << " ";
-        currHeight = height;
-    }
-    else if (root->left && height < currHeight)
-    {
-        cout << root->left->data << " ";
-        currHeight = height;
-    }
-    levelorderRecursive(root->right, height - 1, currHeight);
-    levelorderRecursive(root->left, height - 1, currHeight);
-}
+// A wrapper over leftViewUtil()
 int height(Node *root)
 {
     if (root == NULL)
-    {
         return 0;
-    }
-    int lheight = height(root->left);
+    int lheight = height(root->right);
     int rheight = height(root->right);
     if (lheight > rheight)
-    {
         return lheight + 1;
-    }
     return rheight + 1;
 }
 void doSomethingWithTheMap(vector<pair<Node *, int>> &m, int min, int max)
@@ -192,50 +165,31 @@ void calculateMinMax(Node *root, int hd, int &min, int &max)
     calculateMinMax(root->left, hd - 1, min, max);
     calculateMinMax(root->right, hd + 1, min, max);
 }
-void fillTheMap(Node *root, vector<pair<Node *, int>> &m, int hd)
+void fillTheMap(Node *root, vector<pair<Node *, int>> &m, int hd, int level)
 {
     if (root == NULL)
         return;
-    if (root->left)
-    {
-        cout << root->left->data << " ";
-        //m.push_back(make_pair(root->left, hd - 1));
-    }
-    if (root->right)
-    {
-        cout << root->right->data << " ";
-        //m.push_back(make_pair(root->right, hd + 1));
-    }
+    if (level == 1)
+        m.push_back(make_pair(root, hd));
 
-    fillTheMap(root->left, m, hd - 1);
-    fillTheMap(root->right, m, hd + 1);
+    fillTheMap(root->left, m, hd - 1, level - 1);
+    fillTheMap(root->right, m, hd + 1, level - 1);
 }
-// vector<int> rightView(Node *root)
-// {
-//     vector<int> useless;
-//     if (root == NULL)
-//     {
-//         return useless;
-//     }
-//     cout << root->data << " ";
-//     int h = height(root);
-//     levelorderRecursive(root, height(root) - 1, h);
-//     return useless;
-// }
-vector<int> rightView(Node *root)
+vector<int> leftView(Node *root)
 {
-    vector<int> useless;
+    vector<int> jh;
     vector<pair<Node *, int>> m;
     int min = 1, max = -1;
     calculateMinMax(root, 0, min, max);
     int hd = 0;
     m.push_back(make_pair(root, 0));
-    fillTheMap(root, m, hd);
-    doSomethingWithTheMap(m, min, max);
-    cout << endl;
-    for (int i = 0; i < m.size(); i++)
+    int heigh = height(root);
+    for (int i = 0; i <= heigh; i++)
     {
-        cout << m[i].first->data << ": " << m[i].second << " ";
+        fillTheMap(root, m, hd, i);
     }
-    return useless;
+
+    doSomethingWithTheMap(m, min, max);
+
+    return jh;
 }
