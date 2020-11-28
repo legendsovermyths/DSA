@@ -2,16 +2,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Tree Node
 struct Node
 {
     int data;
-    Node *left;
-    Node *right;
+    struct Node *left;
+    struct Node *right;
 };
-
-vector<int> leftView(struct Node *root);
-
 // Utility function to create a new Tree Node
 Node *newNode(int val)
 {
@@ -22,7 +18,6 @@ Node *newNode(int val)
 
     return temp;
 }
-
 // Function to Build Tree
 Node *buildTree(string str)
 {
@@ -38,9 +33,6 @@ Node *buildTree(string str)
     for (string str; iss >> str;)
         ip.push_back(str);
 
-    // for(string i:ip)
-    //     cout<<i<<" ";
-    // cout<<endl;
     // Create the root of the tree
     Node *root = newNode(stoi(ip[0]));
 
@@ -92,9 +84,19 @@ Node *buildTree(string str)
 
     return root;
 }
+void inorder(Node *node)
+{
+    if (node == NULL)
+        return;
 
+    inorder(node->left);
+    cout << node->data << " ";
+    inorder(node->right);
+}
+void toSumTree(Node *node);
 int main()
 {
+
     int t;
     scanf("%d ", &t);
     while (t--)
@@ -102,100 +104,72 @@ int main()
         string s;
         getline(cin, s);
         Node *root = buildTree(s);
-        vector<int> vec = leftView(root);
-        for (int x : vec)
-            cout << x << " ";
+        toSumTree(root);
+        inorder(root);
         cout << endl;
     }
-    return 0;
-}
-
-// } Driver Code Ends
+    return 1;
+} // } Driver Code Ends
 
 /* A binary tree node
-
 struct Node
 {
     int data;
-    struct Node* left;
-    struct Node* right;
-    
-    Node(int x){
-        data = x;
-        left = right = NULL;
-    }
-};
- */
+    Node* left, * right;
+}; */
 
-// A wrapper over leftViewUtil()
-int height(Node *root)
+// Convert a given tree to a tree where every node contains sum of values of
+// nodes in left and right subtrees in the original tree
+int FindValueAtEachNode(Node *root)
 {
-    if (root == NULL)
-        return 0;
-    int lheight = height(root->right);
-    int rheight = height(root->right);
-    if (lheight > rheight)
-        return lheight + 1;
-    return rheight + 1;
-}
-void doSomethingWithTheMap(vector<pair<Node *, int>> &m, int min, int max)
-{
-
-    for (int i = min; i <= max; i++)
+    if (root->left == NULL && root->right == NULL)
     {
-        for (int j = 0; j < m.size(); j++)
-        {
-            if (m[j].second == i)
-            {
-                cout << m[j].first->data << " ";
-                break;
-            }
-        }
+        return 0;
     }
-    return;
+    if (root->right && root->left)
+    {
+        return FindValueAtEachNode(root->left) + FindValueAtEachNode(root->right) + root->left->data + root->right->data;
+    }
+    if (root->right && root->left == NULL)
+    {
+        return FindValueAtEachNode(root->right) + root->right->data;
+    }
+    if (root->right == NULL && root->left)
+    {
+        return FindValueAtEachNode(root->left) + root->left->data;
+    }
+    return 0;
 }
-void calculateMinMax(Node *root, int hd, int &min, int &max)
+void toSumTree(Node *node)
 {
-    if (root == NULL)
-        return;
-    if (hd < min)
-        min = hd;
-    if (hd > max)
-        max = hd;
-    calculateMinMax(root->left, hd - 1, min, max);
-    calculateMinMax(root->right, hd + 1, min, max);
-}
-void fillTheMap(Node *root, vector<pair<Node *, int>> &m, int hd, int level)
-{
-    if (root == NULL)
-        return;
-    if (level == 1)
-        m.push_back(make_pair(root, hd));
-
-    fillTheMap(root->left, m, hd - 1, level - 1);
-    fillTheMap(root->right, m, hd + 1, level - 1);
-}
-vector<int> leftView(Node *root)
-{
-    vector<int> jh;
+    Node *temp = newNode(FindValueAtEachNode(node));
+    Node *temp2 = node;
+    Node *temp3 = temp;
     queue<Node *> q;
-    Node *temp = root;
-    cout << root->data << " ";
-    q.push(root);
+    queue<Node *> q2;
+    q.push(node);
+    q2.push(temp);
+    int i = 0;
     while (!q.empty())
     {
-        temp = q.front();
+
+        temp2 = q.front();
+        temp3 = q2.front();
+        q2.pop();
         q.pop();
-        if (temp->left)
+        if (temp2->left)
         {
-            cout << temp->left->data << " ";
-            q.push(temp->left);
+            temp3->left = newNode(FindValueAtEachNode(temp2->left));
+            q.push(temp2->left);
+            q2.push(temp3->left);
         }
-        if (temp->right)
+        if (temp2->right)
         {
-            cout << temp->right->data << " ";
-            q.push(temp->right);
+            temp3->right = newNode(FindValueAtEachNode(temp2->right));
+            q.push(temp2->right);
+            q2.push(temp3->right);
         }
     }
-    return jh;
+    *node = *temp;
+    return;
 }
