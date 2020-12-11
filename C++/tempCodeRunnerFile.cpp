@@ -1,8 +1,29 @@
-{
-    vector<int> vec;
-    for (int i = 0; i < vec.size(); i++)
+Node *temp = root;
+    while (temp)
     {
-        cout << vec[i] << " ";
+        if (temp->left && Key < temp->data)
+        {
+            temp = temp->left;
+        }
+        if (temp->right && Key >= temp->data)
+        {
+            temp = temp->right;
+        }
+        else
+        {
+            if (Key >= temp->data)
+            {
+                Node *node = new Node(Key);
+                temp->right = node;
+                break;
+            }
+            if (Key < temp->data)
+            {
+                Node *node = new Node(Key);
+                temp->left = node;
+                break;
+            }
+        }
     }
-    return true;
-}
+
+    return root;
