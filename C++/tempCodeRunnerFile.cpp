@@ -1,29 +1,35 @@
-Node *temp = root;
-    while (temp)
+if (root == NULL)
     {
-        if (temp->left && Key < temp->data)
-        {
-            temp = temp->left;
-        }
-        if (temp->right && Key >= temp->data)
-        {
-            temp = temp->right;
-        }
-        else
-        {
-            if (Key >= temp->data)
-            {
-                Node *node = new Node(Key);
-                temp->right = node;
-                break;
-            }
-            if (Key < temp->data)
-            {
-                Node *node = new Node(Key);
-                temp->left = node;
-                break;
-            }
-        }
+        return root;
     }
-
+    Node *temp = root;
+    while (temp != NULL)
+    {
+        if (temp->right)
+        {
+            if (temp->right->data < X)
+            {
+                temp = temp->right;
+            }
+            if (temp->right->data == X)
+            {
+                temp->right = NULL;
+                break;
+            }
+        }
+        if (temp->left)
+        {
+            if (temp->left->data < X)
+            {
+                temp = temp->left;
+            }
+            if (temp->left->data == X)
+            {
+                temp->left = NULL;
+                break;
+            }
+        }
+        if (temp->left == NULL && temp->right == NULL)
+            break;
+    }
     return root;

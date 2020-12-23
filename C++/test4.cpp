@@ -1,116 +1,120 @@
 #include <bits/stdc++.h>
-#define MAX 5
+
 using namespace std;
 
-// Function returns true if the
-// move taken is valid else
-// it will return false.
-bool isSafe(int row, int col, int m[][MAX],
-            int n, bool visited[][MAX])
-{
-    if (row == -1 || row == n || col == -1 ||
-        col == n || visited[row][col] || m[row][col] == 0)
-        return false;
+vector<string> split_string(string);
 
-    return true;
+// Complete the cutTheSticks function below.
+vector<int> cutTheSticks(vector<int> arr)
+{
+    sort(arr.begin(), arr.end());
+    int counte = 0;
+    int prev = arr[0];
+    vector<int> util;
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (arr[i] == prev)
+        {
+            counte++;
+        }
+        else
+        {
+            util.push_back(counte);
+            counte = 1;
+            prev = arr[i];
+        }
+    }
+    util.push_back(counte);
+    for (int i = 0; i < util.size(); i++)
+    {
+        cout << util[i] << " ";
+    }
+
+    int k = 0;
+    vector<int> solution;
+    int sum = arr.size();
+    while (sum > 0)
+    {
+        solution.push_back(sum);
+        sum = sum - util[k];
+        k++;
+    }
+    for (int i = 0; i < util.size(); i++)
+    {
+        cout << solution[i] << " ";
+    }
+    return solution;
 }
 
-// Function to print all the possible
-// paths from (0, 0) to (n-1, n-1).
-void printPathUtil(int row, int col, int m[][MAX],
-                   int n, string &path, vector<string> &possiblePaths, bool visited[][MAX])
-{
-    // This will check the initial point
-    // (i.e. (0, 0)) to start the paths.
-    if (row == -1 || row == n || col == -1 || col == n || visited[row][col] || m[row][col] == 0)
-        return;
-
-    // If reach the last cell (n-1, n-1)
-    // then store the path and return
-    if (row == n - 1 && col == n - 1)
-    {
-        possiblePaths.push_back(path);
-        return;
-    }
-
-    // Mark the cell as visited
-    visited[row][col] = true;
-
-    // Try for all the 4 directions (down, left,
-    // right, up) in the given order to get the
-    // paths in lexicographical order
-
-    // Check if downward move is valid
-    if (isSafe(row + 1, col, m, n, visited))
-    {
-        path.push_back('D');
-        printPathUtil(row + 1, col, m, n,
-                      path, possiblePaths, visited);
-        path.pop_back();
-    }
-
-    // Check if the left move is valid
-    if (isSafe(row, col - 1, m, n, visited))
-    {
-        path.push_back('L');
-        printPathUtil(row, col - 1, m, n,
-                      path, possiblePaths, visited);
-        path.pop_back();
-    }
-
-    // Check if the right move is valid
-    if (isSafe(row, col + 1, m, n, visited))
-    {
-        path.push_back('R');
-        printPathUtil(row, col + 1, m, n,
-                      path, possiblePaths, visited);
-        path.pop_back();
-    }
-
-    // Check if the upper move is valid
-    if (isSafe(row - 1, col, m, n, visited))
-    {
-        path.push_back('U');
-        printPathUtil(row - 1, col, m, n,
-                      path, possiblePaths, visited);
-        path.pop_back();
-    }
-
-    // Mark the cell as unvisited for
-    // other possible paths
-    visited[row][col] = false;
-}
-
-// Function to store and print
-// all the valid paths
-void printPath(int m[MAX][MAX], int n)
-{
-    // vector to store all the possible paths
-    vector<string> possiblePaths;
-    string path;
-    bool visited[n][MAX];
-    memset(visited, false, sizeof(visited));
-
-    // Call the utility function to
-    // find the valid paths
-    printPathUtil(0, 0, m, n, path,
-                  possiblePaths, visited);
-
-    // Print all possible paths
-    for (int i = 0; i < possiblePaths.size(); i++)
-        cout << possiblePaths[i] << " ";
-}
-
-// Driver code
 int main()
 {
-    int m[MAX][MAX] = {{1, 1, 0, 0, 0},
-                       {1, 1, 1, 1, 1},
-                       {1, 1, 1, 0, 1},
-                       {0, 0, 1, 0, 1},
-                       {0, 0, 1, 1, 1}};
-    int n = sizeof(m) / sizeof(m[0]);
-    printPath(m, n);
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int n;
+    cin >> n;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    string arr_temp_temp;
+    getline(cin, arr_temp_temp);
+
+    vector<string> arr_temp = split_string(arr_temp_temp);
+
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++)
+    {
+        int arr_item = stoi(arr_temp[i]);
+
+        arr[i] = arr_item;
+    }
+
+    vector<int> result = cutTheSticks(arr);
+
+    for (int i = 0; i < result.size(); i++)
+    {
+        fout << result[i];
+
+        if (i != result.size() - 1)
+        {
+            fout << "\n";
+        }
+    }
+
+    fout << "\n";
+
+    fout.close();
 
     return 0;
+}
+
+vector<string> split_string(string input_string)
+{
+    string::iterator new_end = unique(input_string.begin(), input_string.end(), [](const char &x, const char &y) {
+        return x == y and x == ' ';
+    });
+
+    input_string.erase(new_end, input_string.end());
+
+    while (input_string[input_string.length() - 1] == ' ')
+    {
+        input_string.pop_back();
+    }
+
+    vector<string> splits;
+    char delimiter = ' ';
+
+    size_t i = 0;
+    size_t pos = input_string.find(delimiter);
+
+    while (pos != string::npos)
+    {
+        splits.push_back(input_string.substr(i, pos - i));
+
+        i = pos + 1;
+        pos = input_string.find(delimiter, i);
+    }
+
+    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
+
+    return splits;
 }
