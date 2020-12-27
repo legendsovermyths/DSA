@@ -1,120 +1,55 @@
+// { Driver Code Starts
 #include <bits/stdc++.h>
 
 using namespace std;
 
-vector<string> split_string(string);
+// } Driver Code Ends
 
-// Complete the cutTheSticks function below.
-vector<int> cutTheSticks(vector<int> arr)
+class Solution
 {
-    sort(arr.begin(), arr.end());
-    int counte = 0;
-    int prev = arr[0];
-    vector<int> util;
-    for (int i = 0; i < arr.size(); i++)
+public:
+    int *findTwoElement(int *arr, int n)
     {
-        if (arr[i] == prev)
+        int *ar = new int[2];
+        unordered_map<int, int> umap;
+        int missing = 0;
+        int twice = 0;
+        for (int i = 0; i < n; i++)
         {
-            counte++;
+            if (!umap[arr[i]])
+            {
+                umap[arr[i]] = 1;
+            }
+            else
+            {
+                twice = umap[arr[i]];
+            }
         }
-        else
+        for (int i = 0; i < n; i++)
         {
-            util.push_back(counte);
-            counte = 1;
-            prev = arr[i];
+            if (!umap[i])
+                missing = i;
         }
+        ar[0] = twice;
+        ar[1] = missing;
+        return ar;
     }
-    util.push_back(counte);
-    for (int i = 0; i < util.size(); i++)
-    {
-        cout << util[i] << " ";
-    }
+};
 
-    int k = 0;
-    vector<int> solution;
-    int sum = arr.size();
-    while (sum > 0)
-    {
-        solution.push_back(sum);
-        sum = sum - util[k];
-        k++;
-    }
-    for (int i = 0; i < util.size(); i++)
-    {
-        cout << solution[i] << " ";
-    }
-    return solution;
-}
+// { Driver Code Starts.
 
 int main()
 {
-    ofstream fout(getenv("OUTPUT_PATH"));
+    // int t;
+    // cin >> t;
+    // while (t--)
+    // {
 
-    int n;
-    cin >> n;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    int a[2] = {2, 2};
 
-    string arr_temp_temp;
-    getline(cin, arr_temp_temp);
-
-    vector<string> arr_temp = split_string(arr_temp_temp);
-
-    vector<int> arr(n);
-
-    for (int i = 0; i < n; i++)
-    {
-        int arr_item = stoi(arr_temp[i]);
-
-        arr[i] = arr_item;
-    }
-
-    vector<int> result = cutTheSticks(arr);
-
-    for (int i = 0; i < result.size(); i++)
-    {
-        fout << result[i];
-
-        if (i != result.size() - 1)
-        {
-            fout << "\n";
-        }
-    }
-
-    fout << "\n";
-
-    fout.close();
-
+    Solution ob;
+    auto ans = ob.findTwoElement(a, 2);
+    cout << ans[0] << " " << ans[1] << "\n";
+    // }
     return 0;
-}
-
-vector<string> split_string(string input_string)
-{
-    string::iterator new_end = unique(input_string.begin(), input_string.end(), [](const char &x, const char &y) {
-        return x == y and x == ' ';
-    });
-
-    input_string.erase(new_end, input_string.end());
-
-    while (input_string[input_string.length() - 1] == ' ')
-    {
-        input_string.pop_back();
-    }
-
-    vector<string> splits;
-    char delimiter = ' ';
-
-    size_t i = 0;
-    size_t pos = input_string.find(delimiter);
-
-    while (pos != string::npos)
-    {
-        splits.push_back(input_string.substr(i, pos - i));
-
-        i = pos + 1;
-        pos = input_string.find(delimiter, i);
-    }
-
-    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
-
-    return splits;
-}
+} // } Driver Code Ends

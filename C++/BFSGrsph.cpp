@@ -39,32 +39,26 @@ int main()
 */
 vector<int> bfs(vector<int> g[], int N)
 {
-    vector<int> res;
+    vector<bool> visited(N, false);
+    vector<int> level;
     queue<int> q;
-    int s;
-    vector<bool> boolean;
-    for (int i = 0; i < N; i++)
-    {
-        boolean.push_back(false);
-    }
-    q.push(g[0][0]);
-    boolean[0] = true;
+    q.push(0);
+    int s = 0;
+    level.push_back(0);
+    visited[s] = true;
     while (!q.empty())
     {
         s = q.front();
-        res.push_back(s);
         q.pop();
-        cout << "H";
-        for (auto i : g[s])
+        for (int i = 0; i < g[s].size(); i++)
         {
-            cout << "k";
-            if (boolean[i] == false)
+            if (visited[g[s][i]] == false)
             {
-                boolean[i] = true;
-                q.push(i);
+                level.push_back(g[s][i]);
+                q.push(g[s][i]);
+                visited[g[s][i]] = true;
             }
         }
-        cout << "d";
     }
-    return res;
+    return level;
 }
