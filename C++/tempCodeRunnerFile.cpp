@@ -1,39 +1,47 @@
-bool isValid(int v, bool graph[101][101], int m, int V, vector<int> &color, int c)
+bool isValid(int number, int sum, int B)
 {
-    for (int i = 1; i <= V; i++)
-    {
-        if (graph[v][i] == 1 && color[i] == c)
-        {
-            return false;
-        }
-    }
-    return true;
+    return number + sum <= B;
 }
-bool DFSUtil(int v, bool graph[101][101], int m, int V, vector<int> &color)
+bool arraySortedOrNot(vector<int> arr, int n)
 {
-    if (v == V)
-    {
-        return true;
-    }
-    for (int c = 1; c < m; c++)
-    {
-        if (isValid(v, graph, m, V, color, c))
-        {
-            color[v] = c;
-            if (DFSUtil(v + 1, graph, m, V, color) == true)
-            {
-                return true;
-            }
-
-            color[v] = 0;
-        }
-    }
-    return false;
+    if (n == 1 || n == 0)
+        return 1;
+    if (arr[n - 1] < arr[n - 2])
+        return 0;
+    return arraySortedOrNot(arr, n - 1);
 }
 
-bool graphColoring(bool graph[101][101], int m, int V)
+void CombinationalSumUtilt(int sum, vector<int> &selectedNumbers, vector<vector<int>> &Allnumbers, int B, vector<int> &A)
 {
-    vector<bool> visited(V, false);
-    vector<int> Color(V + 1, 0);
-    return (DFSUtil(1, graph, m, V, Color));
+    // for (int i = 0; i < selectedNumbers.size(); i++)
+    // {
+    //     cout << selectedNumbers[i] << ' ';
+    // }
+
+    if (sum == B)
+    {
+        if (arraySortedOrNot(selectedNumbers, selectedNumbers.size()))
+        {
+            Allnumbers.push_back(selectedNumbers);
+            return;
+        }
+    }
+    for (int i = 0; i < A.size(); i++)
+    {
+        if (isValid(A[i], sum, B))
+        {
+            selectedNumbers.push_back(A[i]);
+            CombinationalSumUtilt(sum + A[i], selectedNumbers, Allnumbers, B, A);
+            selectedNumbers.pop_back();
+        }
+    }
+}
+
+vector<vector<int>> combinationSum(vector<int> &A, int B)
+{
+    vector<vector<int>> AllNumbers;
+    vector<int> selectedNumbers;
+    int sum = 0;
+    CombinationalSumUtilt(sum, selectedNumbers, AllNumbers, B, A);
+    return AllNumbers;
 }
