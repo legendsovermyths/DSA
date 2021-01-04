@@ -47,7 +47,7 @@ int Solution(vector<vector<int>> &connections, int n)
             DFSutil(i, visited, DFS, g);
         }
     }
-    std::cout << "count =" << count << std::endl;
+    std::cout << "count = " << count << std::endl;
     return count;
 }
 int main()
