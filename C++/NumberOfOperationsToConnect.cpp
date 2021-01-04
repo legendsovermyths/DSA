@@ -35,13 +35,20 @@ int Solution(vector<vector<int>> &connections, int n)
         }
         cout << endl;
     }
-
+    int count = -1;
     vector<int> DFS;
     vector<bool> visited(n, false);
     DFS.push_back(0);
-    visited[0] = true;
-    DFSutil(0, visited, DFS, g);
-    return n - DFS.size();
+    for (int i = 0; i < n; i++)
+    {
+        if (!visited[i])
+        {
+            count++;
+            DFSutil(i, visited, DFS, g);
+        }
+    }
+    std::cout << "count =" << count << std::endl;
+    return count;
 }
 int main()
 {
