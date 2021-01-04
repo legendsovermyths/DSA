@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <stack>
 using namespace std;
 string convertToString(char *a, int size)
 {
@@ -10,6 +11,22 @@ string convertToString(char *a, int size)
         s = s + a[i];
     }
     return s;
+}
+bool isValid(string l)
+{
+    stack<char> s;
+    for (int i = 0; i < l.length(); i++)
+    {
+        if (l[i] == ')' && s.size() == 0)
+            return false;
+        else if (l[i] == ')')
+            s.pop();
+        else if (l[i] == '(')
+            s.push('(');
+    }
+    if (s.size() != 0)
+        return false;
+    return true;
 }
 bool isPalindrome(string s)
 {
@@ -48,30 +65,5 @@ void PalindromeUtil(string s, vector<vector<string>> &allPart, vector<string> &c
 }
 int main()
 {
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        vector<vector<string>> All;
-        vector<string> curr;
-        int k;
-        cin >> k;
-        char l[k];
-        for (int i = 0; i < k; i++)
-        {
-            cin >> l[i];
-        }
-        string s = convertToString(l, k);
-        int count = 0;
-        PalindromeUtil(s, All, curr, count);
-
-        // for (int i = 0; i < All.size(); i++)
-        // {
-        //     for (int j = 0; j < All[i].size(); j++)
-        //     {
-        //         count++;
-        //     }
-        // }
-        cout << count << endl;
-    }
+    std::cout << isValid("(())") << std::endl;
 }

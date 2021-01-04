@@ -1,1 +1,1 @@
-allNumbers.push_back(ne);
+SolutionUtil(newS, answers);
