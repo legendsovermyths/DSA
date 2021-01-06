@@ -29,11 +29,7 @@ So we need to check only left side for
 attacking queens */
 bool isSafe(int board[N][N], int row, int col)
 {
-    int c = 0;
-    while (1)
-    {
-        c++;
-    }
+
     int i, j;
 
     /* Check this row on left side */
