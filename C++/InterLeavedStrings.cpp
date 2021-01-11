@@ -25,7 +25,7 @@ bool isInterleave(string A, string B, string C)
     int Alen = A.length();
     int Blen = B.length();
     int Clen = C.length();
-    vector<vector<bool>> vec(Alen, vector<bool>(Blen, false));
+    vector<vector<bool>> vec(Alen + 1, vector<bool>(Blen + 1, false));
     if (Clen != Alen + Blen)
     {
         return false;
@@ -35,24 +35,48 @@ bool isInterleave(string A, string B, string C)
     {
         if (C[i] == A[j])
         {
-            vec[j++][k] = true;
-            if (j == Alen)
-                j = Alen - 1;
+            j = j + 1;
+            vec[j][k] = true;
         }
         else if (C[i] == B[k])
         {
-            vec[j][k++] = true;
-            if (k == Blen)
-                k = Blen - 1;
+            k = k + 1;
+            vec[j][k] = true;
         }
     }
-    for (int i = 0; i < Alen; i++)
+    // for (int i = 0; i <= Alen; i++)
+    // {
+    //     for (int j = 0; j <= Blen; j++)
+    //     {
+    //         cout << vec[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+    // cout << endl;
+    j = 0;
+    k = 0;
+    for (int i = 0; i < Clen; i++)
     {
-        for (int j = 0; j < Blen; j++)
+
+        if (C[i] == B[k])
         {
-            cout << vec[i][j] << " ";
+            k = k + 1;
+            vec[j][k] = true;
         }
-        cout << endl;
+        else if (C[i] == A[j])
+        {
+            j = j + 1;
+            vec[j][k] = true;
+        }
     }
-    return vec[Alen - 1][Blen - 1];
+    // for (int i = 0; i <= Alen; i++)
+    // {
+    //     for (int j = 0; j <= Blen; j++)
+    //     {
+    //         cout << vec[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+    return vec[Alen][Blen];
 }
+//XXXXX YYXYXYX XXYYXXXYXYYX
