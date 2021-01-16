@@ -1,8 +1,8 @@
-for (int i = 0; i <= s11; i++)
-    {
-        for (int j = 0; j <= s22; j++)
+for (int i = 0; i < n; i++)
         {
-            cout << dp[i][j] << " ";
+            for (int j = 0; j < m; j++)
+            {
+                cout << dp[i][j] << " ";
+            }
+            cout << endl;
         }
-        cout << endl;
-    }
