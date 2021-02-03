@@ -1,1 +1,4 @@
-cout << a[i][left] << " ";
+if (tempMin == 0)
+            // {
+            //     return i;
+            // }
