@@ -1,4 +1,1 @@
-if (tempMin == 0)
-            // {
-            //     return i;
-            // }
+(startend[j][0] <= target && startend[j][1] > target)
