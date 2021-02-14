@@ -8,22 +8,33 @@ using namespace std;
 
 vector<long long> nextLargerElement(long long arr[], int n)
 {
-    vector<long long> vec;
-    stack<long long> s;
-    s.push(arr[0]);
+    vector<long long> vec(n, 0);
+    pair<long long, int> Pair1;
+    stack<pair<long long, int>> s;
+    Pair1.first = arr[0];
+    Pair1.second = 0;
+    s.push(Pair1);
     int next;
     for (int i = 1; i < n; i++)
     {
-        while (!s.empty() && arr[i] > s.top())
+        while (!s.empty() && s.top().first < arr[i])
         {
-            vec.push_back(arr[i]);
+            vec[s.top().second] = arr[i];
             s.pop();
         }
-        s.push(arr[i]);
+        Pair1.first = arr[i];
+        Pair1.second = i;
+        s.push(Pair1);
     }
+    for (int i = 0; i < n; i++)
+    {
+        if (vec[i] == 0)
+            vec[i] = -1;
+    }
+
     return vec;
 }
-
+//
 // { Driver Code Starts.
 
 int main()
