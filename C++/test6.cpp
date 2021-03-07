@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <cmath>
 using namespace std;
 int Algorithm(int A[], int n)
 {
@@ -14,8 +15,5 @@ int Algorithm(int A[], int n)
 }
 int main()
 {
-    int A[] = {-1, 2, 3, 4, -2, -1, 6, 7};
-    int n = 8;
-    cout << Algorithm(A, n) << endl;
-    return 0;
+    //test
 }
