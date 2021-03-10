@@ -12,20 +12,23 @@ public:
         long long int count = 0;
         int right = n - 1;
         int left = k;
+        bool inloop = false;
         while (left < right)
         {
-            if (arr[left] + arr[right] <= sum)
+            inloop = true;
+            if (arr[left] + arr[right] < sum)
             {
-                cout << arr[left] << '+' << arr[right] << '+' << arr[k - 1];
                 left++;
             }
-            else if (arr[left] + arr[right] > sum)
+            else if (arr[left] + arr[right] >= sum)
             {
                 right--;
-                count++;
             }
         }
-        return count;
+        cout << left;
+        if (left == right)
+            return ((left - k + 1) * (left - k)) / 2;
+        return 0;
     };
 
     long long countTriplets(long long arr[], int n, long long sum)
@@ -33,12 +36,12 @@ public:
         sort(arr, arr + n);
         long long int count = 0;
         long long int newSum = 0;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n - 1; i++)
         {
             newSum = sum - arr[i];
             count = count + Addcount(arr, i + 1, newSum, n);
         }
-        return count;
+        return count + 1;
     }
 };
 
