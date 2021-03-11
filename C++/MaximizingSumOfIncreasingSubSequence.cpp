@@ -9,33 +9,17 @@ class Solution
 public:
     int maxSumIS(int arr[], int n)
     {
-        vector<vector<int>> dp;
-        dp.push_back({arr[0], arr[0]});
-        bool checker = false;
+        vector<int> dp(n, 0);
+        for (int i = 0; i < n; i++)
+            dp[i] = arr[i];
         for (int i = 1; i < n; i++)
-        {
-            for (int j = 0; j < dp.size(); j++)
-            {
-                if (dp[j][0] < arr[i])
-                {
-                    dp.push_back({arr[i], arr[i] + dp[j][1]});
-                    checker = true;
-                }
-            }
-            if (checker == false)
-            {
-                dp.push_back({arr[i], arr[i]});
-            }
-            checker = false;
-        }
+            for (int j = 0; j < i; j++)
+                if (arr[j] < arr[i] && dp[j] + arr[i] > dp[i])
+                    dp[i] = dp[j] + arr[i];
         int maxSum = 0;
-        for (int i = 0; i < dp.size(); i++)
-        {
-            if (dp[i][1] > maxSum)
-            {
-                maxSum = dp[i][1];
-            }
-        }
+        for (int k = 0; k < n; k++)
+            if (maxSum < dp[k])
+                maxSum = dp[k];
         return maxSum;
     }
 };
