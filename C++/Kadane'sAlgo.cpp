@@ -14,8 +14,8 @@ int Algorithm(int A[], int n)
 }
 int main()
 {
-    int A[] = {-1, 2, 3, 4, -2, -1, 6, 7};
-    int n = 8;
+    int A[] = {4, -1, 8, -1, 14};
+    int n = 5;
     cout << Algorithm(A, n) << endl;
     return 0;
 }
