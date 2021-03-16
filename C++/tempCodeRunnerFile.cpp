@@ -1,21 +1,11 @@
-#include <bits/stdc++.h>
-using namespace std;
-int Algorithm(int A[], int n)
-{
-    int tempMax = 0, maxFinal = 0, curr = 0;
-    tempMax = A[0];
-    for (int i = 1; i < n; i++)
+ if (ans.length() == n)
     {
-        tempMax = max(tempMax + A[i], A[i]);
-        if (maxFinal < tempMax)
-            maxFinal = tempMax;
+        vec.push_back(ans);
     }
-    return maxFinal;
-}
-int main()
-{
-    int A[] = {4, -1, 8, -1, 14};
-    int n = 5;
-    cout << Algorithm(A, n) << endl;
-    return 0;
-}
+    for (int i = 0; i < s.length(); i++)
+    {
+
+        char ch = s[i];
+        string ros = s.substr(0, i) + s.substr(i + 1);
+        solution(ros, ans + ch, n, vec);
+    }

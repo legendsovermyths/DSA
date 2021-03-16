@@ -57,6 +57,7 @@ int minSwap(int *arr, int n, int k)
             tempAns++;
         }
     }
+    answer = tempAns;
     for (int i = 0; j < n - 1; i++, j++)
     {
         cout << tempAns << ' ';
