@@ -12,29 +12,26 @@ class Solution
 public:
     int trappingWater(int arr[], int n)
     {
-        vector<int> walls;
-        walls.push_back(arr[0]);
-        int k = 0;
+        vector<int> left(n, 0);
+        vector<int> right(n, 0);
+        int max_ = 0;
         for (int i = 0; i < n; i++)
         {
-            if (arr[i] > walls[k])
-            {
-                walls.push_back(arr[i]);
-                k++;
-            }
+            max_ = max(max_, arr[i]);
+            left[i] = max_;
         }
-        int currWall = walls[0];
-        int r = walls.size();
-        int index = 1;
-        int boundWall;
+        max_ = 0;
+        for (int i = n - 1; i >= 0; i--)
+        {
+            max_ = max(max_, arr[i]);
+            right[i] = max_;
+        }
+        int answer;
         for (int i = 0; i < n; i++)
         {
-            if (arr[i] == walls[index])
-            {
-                currWall = walls[index];
-                index++;
-            }
+            answer = min(right[i], left[i]) - arr[i] + answer;
         }
+        return answer;
     }
 };
 
