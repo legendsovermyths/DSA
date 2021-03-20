@@ -19,13 +19,12 @@ public:
         int right = m - 1, left = 1, mid = right + (left - right) / 2;
         while (left < right)
         {
-            cout << "i" << ' ';
-            if (target <= arr2[mid])
+            if (target < arr2[mid])
             {
                 right = mid - 1;
                 mid = right + (left - right) / 2;
             }
-            else if (target > arr2[mid])
+            else if (target >= arr2[mid])
             {
                 left = mid + 1;
                 mid = right + (left - right) / 2;
@@ -42,7 +41,6 @@ public:
         int i = 0, j = 0;
         while (i < n && j < m)
         {
-            cout << "j" << ' ';
             if (arr1[i] < arr2[0])
             {
                 i++;
@@ -51,7 +49,13 @@ public:
             {
                 swap(&arr1[i], &arr2[0]);
                 j = search(arr2, m);
+                cout << j << endl;
                 swap(&arr2[0], &arr2[j - 1]);
+                for (int k = 0; k < m; k++)
+                {
+                    cout << arr2[k] << " ";
+                }
+                cout << endl;
                 i++;
             }
         }
