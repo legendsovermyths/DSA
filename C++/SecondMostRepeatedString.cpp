@@ -9,7 +9,6 @@ class Solution
 public:
     string secFrequent(string arr[], int n)
     {
-        unordered_map<>
     }
 };
 
