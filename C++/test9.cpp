@@ -2,9 +2,7 @@
 using namespace std;
 int main()
 {
-    unordered_map<char, char> umap;
-    umap['A'] = 'C';
-    bool x = umap['B'] == 0;
-    cout << x << endl;
-    return 0;
+    string ani = "Anirudh";
+    cout << ani.substr(7) << ' ';
+    cout << ani.substr(0, 7) << ' ';
 }

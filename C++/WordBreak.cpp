@@ -10,23 +10,11 @@ int wordBreak(string A, vector<string> &B);
 
 int main()
 {
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        int n;
-        cin >> n;
-        vector<string> dict;
-        for (int i = 0; i < n; i++)
-        {
-            string S;
-            cin >> S;
-            dict.push_back(S);
-        }
-        string line;
-        cin >> line;
-        cout << wordBreak(line, dict) << "\n";
-    }
+
+    vector<string> dict = {"i", "like", "sam", "sung", "samsung", "mobile",
+                           "ice", "cream", "icecream", "man", "go", "mango"};
+    string line = "ilike";
+    cout << wordBreak(line, dict) << "\n";
 }
 // } Driver Code Ends
 
@@ -34,16 +22,48 @@ int main()
 
 // A : given string to search
 // B : vector of available strings
-bool contains(vector<string> &B, string s)
+bool IsWordPresent(string A, vector<string> &B)
 {
     int count = B.size();
     for (int i = 0; i < count; i++)
     {
-        if (B[i] == s)
+        if (B[i] == A)
+        {
             return true;
+        }
     }
     return false;
 }
+void Solution(string A, vector<string> &B, int &count)
+{
+    if (count > 0)
+    {
+        return;
+    }
+    int n = A.length();
+    if (A == "")
+    {
+        count += 1;
+        return;
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        string toCheck = A.substr(0, i);
+        if (IsWordPresent(toCheck, B))
+        {
+            string newA = A.substr(i);
+            cout << newA << " ";
+            Solution(newA, B, count);
+        }
+    }
+}
 int wordBreak(string A, vector<string> &B)
 {
+    int count = 0;
+    Solution(A, B, count);
+    if (count > 0)
+    {
+        return true;
+    }
+    return false;
 }
