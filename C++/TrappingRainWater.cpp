@@ -12,6 +12,7 @@ class Solution
 public:
     int trappingWater(int arr[], int n)
     {
+        register int m = 0;
         vector<int> left(n, 0);
         vector<int> right(n, 0);
         int max_ = 0;

@@ -25,5 +25,40 @@ int main()
 
 string findSubString(string str)
 {
-    // Your code goes here
+    vector<int> Visited(CHAR_MAX, 0);
+    int counter = 0;
+    int minWindow = INT_MAX;
+    int totalDistinct = 0;
+    unordered_map<char, int> umap;
+    int size = str.length();
+    for (int i = 0; i < size; i++)
+    {
+        if (umap[str[i]] == 0)
+        {
+            totalDistinct++;
+            umap[str[i]] = 1;
+        }
+    }
+    int start = 0;
+    for (int i = 0; i < size; i++)
+    {
+        Visited[str[i]]++;
+        if (Visited[str[i]] == 1)
+        {
+            counter++;
+        }
+        if (counter == totalDistinct)
+        {
+            while (Visited[str[start]] > 1)
+            {
+                if (Visited[str[start]] > 1)
+                {
+                    Visited[str[start]]--;
+                    start++;
+                }
+            }
+            minWindow = min(minWindow, i - start + 1);
+        }
+    }
+    cout << minWindow << " ";
 }

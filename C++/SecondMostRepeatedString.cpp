@@ -9,7 +9,7 @@ class Solution
 public:
     string secFrequent(string arr[], int n)
     {
-    }
+        }
 };
 
 // { Driver Code Starts.
