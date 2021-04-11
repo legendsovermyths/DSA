@@ -1,1 +1,1 @@
- // cout << endl;
+cout << sum << " ";
