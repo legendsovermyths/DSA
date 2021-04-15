@@ -18,4 +18,32 @@ typedef vector<ll> vl;
 
 int main()
 {
+    ll n, m;
+    cin >> n >> m;
+    vi vec(n, 0);
+    loop(i, n) cin >> vec[i];
+    ll ub = 2000000000, lb = 0, ans = 0, sum = 0;
+    while (lb <= ub)
+    {
+        ll mid = (ub + lb) / 2;
+        loop(i, n)
+        {
+            if (vec[i] > mid)
+            {
+                sum += vec[i] - mid;
+            }
+        }
+        if (sum >= m)
+        {
+            ans = mid;
+            sum = 0;
+            lb = mid + 1;
+        }
+        else
+        {
+            sum = 0;
+            ub = mid - 1;
+        }
+    }
+    cout << ans << endl;
 }
