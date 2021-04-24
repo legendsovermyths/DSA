@@ -1,2 +1,2 @@
-
-int main()
+    if (dots >= finaldots)
+        return;

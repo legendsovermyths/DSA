@@ -24,10 +24,6 @@ bool canCook(vector<int> Ranks, long long int order, int time, int n)
 }
 int main()
 {
-    vector<int> vec = {1, 2, 3, 4};
-    int n = 4;
-    long long order = 10;
-    int time = 11;
-    canCook(vec, order, time, n);
-    return 0;
+    string s = "Anirudh";
+    cout << s.substr(0, 5) << endl;
 }
