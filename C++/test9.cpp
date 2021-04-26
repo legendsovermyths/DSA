@@ -26,4 +26,5 @@ int main()
 {
     string s = "Anirudh";
     cout << s.substr(0, 5) << endl;
+    queue<int> q;
 }
