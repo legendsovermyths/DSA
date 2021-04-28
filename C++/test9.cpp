@@ -1,30 +1,75 @@
+/* C++ Program to check whether valid
+ expression is redundant or not*/
 #include <bits/stdc++.h>
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-bool canCook(vector<int> Ranks, long long int order, int time, int n)
+
+// Function to check redundant brackets in a
+// balanced expression
+bool checkRedundancy(string &str)
 {
-    int sum = 0;
-    int sum2 = 0;
-    int time_taken = 0;
-    for (int i = 0; i < n; i++)
+    // create a stack of characters
+    stack<char> st;
+
+    // Iterate through the given expression
+    for (auto &ch : str)
     {
-        while (time_taken + (sum2 + 1) * Ranks[i] <= time)
+
+        // if current character is close parenthesis ')'
+        if (ch == ')')
         {
-            sum2++;
-            time_taken = time_taken + sum2 * Ranks[i];
-            cout << sum2 << " ";
+            char top = st.top();
+            st.pop();
+
+            // If immediate pop have open parenthesis '('
+            // duplicate brackets found
+            bool flag = true;
+
+            if (!st.empty() and top != '(')
+            {
+
+                // Check for operators in expression
+                if (top == '+' || top == '-' ||
+                    top == '*' || top == '/')
+                    flag = false;
+
+                // Fetch top element of stack
+                top = st.top();
+                st.pop();
+            }
+
+            // If operators not found
+            if (flag == true)
+                return true;
         }
-        time_taken = 0;
-        sum = sum2 + sum;
-        sum2 = 0;
+
+        else
+            st.push(ch); // push open parenthesis '(',
+                         // operators and operands to stack
     }
-    cout << sum << " ";
-    return sum >= order;
+    return false;
 }
+
+// Function to check redundant brackets
+void findRedundant(string &str)
+{
+    bool ans = checkRedundancy(str);
+    if (ans == true)
+        cout << "Yes\n";
+    else
+        cout << "No\n";
+}
+
+// Driver code
 int main()
 {
-    string s = "Anirudh";
-    cout << s.substr(0, 5) << endl;
-    queue<int> q;
+    string str = "((a+b))";
+    findRedundant(str);
+
+    str = "(a+(b)/c)";
+    findRedundant(str);
+
+    str = "(a+b*(c-d))";
+    findRedundant(str);
+
+    return 0;
 }
