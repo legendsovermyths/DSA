@@ -1,2 +1,9 @@
-
-        // for (int i = 0; i < V; i++)
+itr(it, umap)
+        // {
+        //     cout << it->first << ": ";
+        //     // loop(i, it->second.size())
+        //     // {
+        //     //     cout << it->second[i] << " ";
+        //     // }
+        //     // cout << endl;
+        // }
