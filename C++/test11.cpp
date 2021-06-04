@@ -18,8 +18,8 @@ typedef vector<ll> vl;
 
 int main()
 {
-
-    string name = "anirudh";
-    cout << name.substr(0, 3);
-    cout << name.substr(3) << endl;
+    pair<int, int> p;
+    p.first = 1;
+    p.second = 2;
+    map<int,pair<int,int>>
 }
