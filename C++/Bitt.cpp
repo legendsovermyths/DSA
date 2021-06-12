@@ -13,19 +13,34 @@ using namespace std;
 #define itr(it, a) for (auto it = a.begin(); it != a.end(); it++)
 #define ll long long
 #define PI 3.1415926535897932384626
+#define MOD 1000000007
 typedef vector<int> vi;
 typedef vector<ll> vl;
 
+ll power(ll x, ll y, ll p)
+{
+    ll res = 1;
+    x = x % p;
+    if (x == 0)
+        return 0;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % p;
+        y = y >> 1;
+        x = (x * x) % p;
+    }
+    return res;
+}
+
 int main()
 {
-    w(t)
+    w(T)
     {
-        ll d, D, P, Q;
-        cin >> D >> d >> P >> Q;
-        ll x = D / d;
-        ll ans = ((x - 1) * P + ((x * (x - 1)) / 2 * Q)) * d;
-        ans += P * d;
-        ans += (P + x * Q) * (D % d);
-        cout << ans << endl;
+        ll N, M;
+        cin >> N >> M;
+        ll answer = power(2, N, MOD) - 1;
+        answer = power(answer, M, MOD);
+        cout << answer << endl;
     }
 }
