@@ -15,16 +15,30 @@ using namespace std;
 #define PI 3.1415926535897932384626
 typedef vector<int> vi;
 typedef vector<ll> vl;
-int a = 9;
 
-int fibo()
+int Solution(vector<int> &arr)
 {
-    return a = 2;
+    int count = arr.size();
+    vector<int> dp(count, 0);
+    dp[0] = arr[0];
+    dp[1] = max(arr[0], arr[0] + arr[1]);
+    for (int i = 2; i < count; i++)
+    {
+        if (i > 2)
+            dp[i] = max(dp[i - 2] + arr[i], max(arr[i - 1] + arr[i] + dp[i - 3], dp[i - 1]));
+        else
+            dp[i] = max(arr[0] + arr[1], max(arr[0] + arr[2], arr[1] + arr[2]));
+    }
+    for (int i = 0; i < count; i++)
+    {
+        cout << dp[i] << ' ';
+    }
+    cout << endl;
+    return dp[count - 1];
 }
 
 int main()
 {
-    cout << a << endl;
-    cout << fibo() << endl;
-    cout << a << endl;
+    vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 8};
+    cout << Solution(arr) << endl;
 }

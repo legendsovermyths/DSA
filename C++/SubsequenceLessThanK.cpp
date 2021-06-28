@@ -15,16 +15,8 @@ using namespace std;
 #define PI 3.1415926535897932384626
 typedef vector<int> vi;
 typedef vector<ll> vl;
-int a = 9;
-
-int fibo()
-{
-    return a = 2;
-}
 
 int main()
 {
-    cout << a << endl;
-    cout << fibo() << endl;
-    cout << a << endl;
+    vector<int> arr = {1, 2, 3, 4, 1, 3};
 }

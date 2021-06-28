@@ -15,16 +15,20 @@ using namespace std;
 #define PI 3.1415926535897932384626
 typedef vector<int> vi;
 typedef vector<ll> vl;
-int a = 9;
-
-int fibo()
-{
-    return a = 2;
-}
 
 int main()
 {
-    cout << a << endl;
-    cout << fibo() << endl;
-    cout << a << endl;
+    vector<int> arr = {2, 6, 8, 1, 4};
+    int MinSoFar = 100000;
+    int ans = 100000;
+    for (int i = 0; i < arr.size(); i++)
+    {
+        MinSoFar = min(arr[i], MinSoFar + arr[i]);
+        if (MinSoFar < ans)
+        {
+            ans = MinSoFar;
+        }
+    }
+    cout << ans << endl;
+    return 0;
 }

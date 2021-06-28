@@ -1,1 +1,1 @@
-cout << answer << " " << st << " " << ed;
+cout << st << " " << ed << " " << maxi << endl;
