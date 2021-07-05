@@ -1,1 +1,4 @@
-cout << st << " " << ed << " " << maxi << endl;
+loop(i, n + 1)
+    {
+        cout << children[i] << " ";
+    }
