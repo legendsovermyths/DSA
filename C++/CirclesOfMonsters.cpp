@@ -1,33 +1,36 @@
 #include <bits/stdc++.h>
-using namespace std;
-#define w(t)  \
-    int t;    \
-    cin >> t; \
-    while (t--)
-#define loop(k, n) for (int k = 0; k < n; k++)
-#define deb(x) cout << #x << "= " << x << endl;
-#define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
-#define Loop(i, k, n) for (int i = k; k < n ? i < n : i > n; k < n ? i += 1 : i -= 1)
-#define all(x) x.begin(), x.end()
-#define sortall(x) sort(all(x))
-#define itr(it, a) for (auto it = a.begin(); it != a.end(); it++)
-#define ll long long
-#define PI 3.1415926535897932384626
-typedef vector<int> vi;
-typedef vector<ll> vl;
 
+using namespace std;
+
+#define forn(i, n) for (int i = 0; i < int(n); ++i)
+
+typedef long long li;
+
+const int N = 300 * 1000 + 13;
+
+int n;
+li a[N], b[N];
+
+void solve()
+{
+    scanf("%d", &n);
+    forn(i, n) scanf("%lld%lld", &a[i], &b[i]);
+
+    li ans = 0, mn = 1e18;
+    forn(i, n)
+    {
+        int ni = (i + 1) % n;
+        li val = min(a[ni], b[i]);
+        ans += a[ni] - val;
+        mn = min(mn, val);
+    }
+    ans += mn;
+    printf("%lld\n", ans);
+}
 int main()
 {
-    w(T)
-    {
-        ll n;
-        cin >> n;
-        ll total = 0;
-        ll mini = 0;
-        vl arr(n, 0);
-        loop(i, n)
-        {
-            cin >> arr[i];
-        }
-        }
+    int T;
+    scanf("%d", &T);
+    forn(i, T)
+        solve();
 }
