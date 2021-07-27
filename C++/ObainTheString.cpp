@@ -15,6 +15,7 @@ using namespace std;
 #define PI 3.1415926535897932384626
 typedef vector<int> vi;
 typedef vector<ll> vl;
+
 int Search(vector<int> &vec, int curr)
 {
     int left = 0, right = vec.size() - 1;
@@ -38,12 +39,47 @@ int Search(vector<int> &vec, int curr)
     }
     return left;
 }
+void Solution()
+{
+    string s, z;
+    cin >> s;
+    cin >> z;
+    unordered_map<char, vector<int>> umap;
+
+    loop(i, s.length())
+    {
+        umap[s[i]].push_back(i);
+    }
+    loop(i, z.length())
+    {
+        if (umap[z[i]].empty())
+        {
+            cout << -1 << endl;
+            return;
+        }
+    }
+    int Curr = -1;
+    int count = 1;
+
+    loop(i, z.length() - 1)
+    {
+        int index = Search(umap[z[i]], Curr);
+        Curr = umap[z[i]][index] + 1;
+        int index2 = Search(umap[z[i + 1]], Curr);
+        // deb2(index, index2);
+        if (index2 >= umap[z[i + 1]].size() || umap[z[i]][index] >= umap[z[i + 1]][index2])
+        {
+            count++;
+            Curr = -1;
+        }
+    }
+    cout << count << endl;
+}
 
 int main()
 {
-    // vi vec = {1, 2, 4, 6, 8, 10, 24};
-    // int index = Search(vec, 2);
-    // cout << index << " " << vec[index] << " ";
-    int e = 20 & 15;
-    cout << e << endl;
+    w(t)
+    {
+        Solution();
+    }
 }
