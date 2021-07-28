@@ -44,6 +44,19 @@ int main()
     // vi vec = {1, 2, 4, 6, 8, 10, 24};
     // int index = Search(vec, 2);
     // cout << index << " " << vec[index] << " ";
-    int e = 20 & 15;
-    cout << e << endl;
+    unordered_map<char, int> mp;
+    mp['c'] = 3;
+    mp['a'] = 8;
+    mp['t'] = 8;
+    mp['j'] = 1;
+    for (auto i : mp)
+    {
+        cout << i.first << ":" << i.second << endl;
+    }
+    mp.erase('t');
+    cout << endl;
+    for (auto i : mp)
+    {
+        cout << i.first << ":" << i.second << endl;
+    }
 }
