@@ -1,0 +1,1 @@
+{"name":"Local: BuildFence","url":"c:\\Users\\aniru\\Desktop\\DSA\\C++\\BuildFence.cpp","tests":[{"id":1628785981947,"input":"3\n6 3\n0 0 2 5 1 1\n2 3\n0 2\n3 2\n3 0 2","output":"YES\nYES\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\aniru\\Desktop\\DSA\\C++\\BuildFence.cpp","group":"local","local":true}

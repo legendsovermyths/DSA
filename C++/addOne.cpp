@@ -13,36 +13,38 @@ using namespace std;
 #define itr(it, a) for (auto it = a.begin(); it != a.end(); it++)
 #define ll long long
 #define PI 3.1415926535897932384626
+#define MOD 1000000007
 typedef vector<int> vi;
 typedef vector<ll> vl;
-int Search(vector<int> &vec, int curr)
-{
-    int left = 0, right = vec.size() - 1;
-    int mid = (right + left) / 2;
-    while (left <= right)
-    {
-        if (curr < vec[mid])
-        {
-            right = mid - 1;
-            mid = (right + left) / 2;
-        }
-        else if (curr > vec[mid])
-        {
-            left = mid + 1;
-            mid = (right + left) / 2;
-        }
-        else
-        {
-            return mid;
-        }
-    }
-    return left;
-}
 
+vector<ll> dp(2 * 100000 + 10, -1);
+int Solution(ll n, ll k)
+{
+    if (n + k < 10)
+        return dp[n + k] = 1;
+    if (dp[n + k] != -1)
+        return dp[n + k];
+    ll elsa = 10 - n;
+    ll answer = 0;
+    answer = (Solution(0, k - elsa) + Solution(1, k - elsa)) % MOD;
+    return dp[n + k] = answer;
+}
 int main()
 {
-    // vi vec = {1, 2, 4, 6, 8, 10, 24};
-    // int index = Search(vec, 2);
-    // cout << index << " " << vec[index] << " ";
-    cout << pow(2, 0.5) << endl;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    w(t)
+    {
+        ll answer = 0;
+        ll n, k;
+        cin >> n >> k;
+        while (n > 0)
+        {
+            answer += Solution(n % 10, k) % MOD;
+            n /= 10;
+        }
+        cout << answer % MOD << "\n";
+    }
+
+    return 0;
 }
