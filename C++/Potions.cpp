@@ -14,48 +14,44 @@ using namespace std;
 #define ll long long
 #define PI 3.1415926535897932384626
 #define MOD 1000000007
-#define N 200000
 typedef vector<int> vi;
 typedef vector<ll> vl;
 
-/*.................Combinatorics...............*/
-vl fac;
-ll power(ll a, ll n)
+ll Solution(vl &a, ll n)
 {
-    a = a % MOD;
-    ll res = 1;
-    while (n > 0)
+    priority_queue<ll, vector<ll>, greater<ll>> pq;
+    ll res = 0;
+    ll count = 0;
+    for (int i = 0; i < n; i++)
     {
-        if (n & 1)
-            res = (res * a) % MOD;
-        a = (a * a) % MOD;
-        n = n >> 1;
+        if (a[i] >= 0)
+        {
+            res += a[i];
+            count++;
+        }
+        else
+        {
+            res += a[i];
+            count++;
+            pq.push(a[i]);
+            if (res < 0)
+            {
+                int emp = pq.top();
+                res -= emp;
+                count--;
+                pq.pop();
+            }
+        }
     }
-    return res;
+    return count;
 }
-ll modInverse(ll n)
-{
-    return power(n, MOD - 2);
-}
-void fact(ll n)
-{
-    fac = vl(N);
-    fac[0] = 1;
-    Loop(i, 1, n + 1)
-        fac[i] = (fac[i - 1] * i) % MOD;
-}
-ll nCr(ll n, ll r)
-{
-    ll res = ((fac[n] * modInverse(fac[n - r])) % MOD * modInverse(fac[r])) % MOD;
-    return res;
-}
-/*.........................end-template.................*/
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    fact(N);
-    int n = 3000, r = 1000;
-    cout << nCr(n, r) << endl;
-    return 0;
+    ll n;
+    cin >> n;
+    vl a(n);
+    loop(i, n) cin >> a[i];
+    cout << Solution(a, n) << endl;
 }

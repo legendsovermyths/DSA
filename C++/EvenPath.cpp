@@ -14,48 +14,49 @@ using namespace std;
 #define ll long long
 #define PI 3.1415926535897932384626
 #define MOD 1000000007
-#define N 200000
 typedef vector<int> vi;
 typedef vector<ll> vl;
 
-/*.................Combinatorics...............*/
-vl fac;
-ll power(ll a, ll n)
-{
-    a = a % MOD;
-    ll res = 1;
-    while (n > 0)
-    {
-        if (n & 1)
-            res = (res * a) % MOD;
-        a = (a * a) % MOD;
-        n = n >> 1;
-    }
-    return res;
-}
-ll modInverse(ll n)
-{
-    return power(n, MOD - 2);
-}
-void fact(ll n)
-{
-    fac = vl(N);
-    fac[0] = 1;
-    Loop(i, 1, n + 1)
-        fac[i] = (fac[i - 1] * i) % MOD;
-}
-ll nCr(ll n, ll r)
-{
-    ll res = ((fac[n] * modInverse(fac[n - r])) % MOD * modInverse(fac[r])) % MOD;
-    return res;
-}
-/*.........................end-template.................*/
+int n, q;
+int r[200020], c[200020];
+int labelR[200020], labelC[200020];
+int a, b, x, y;
+
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    fact(N);
-    int n = 3000, r = 1000;
-    cout << nCr(n, r) << endl;
+    cin >> n >> q;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> r[i];
+        r[i] %= 2;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> c[i];
+        c[i] %= 2;
+    }
+
+    labelR[0] = 0;
+    labelC[0] = 0;
+    for (int i = 1; i < n; i++)
+    {
+        labelR[i] = labelR[i - 1] + (r[i] != r[i - 1]);
+        labelC[i] = labelC[i - 1] + (c[i] != c[i - 1]);
+    }
+
+    while (q--)
+    {
+        cin >> a >> b >> x >> y;
+
+        a--, b--, x--, y--;
+
+        if (labelR[a] == labelR[x] && labelC[b] == labelC[y])
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
+    }
     return 0;
 }

@@ -14,48 +14,33 @@ using namespace std;
 #define ll long long
 #define PI 3.1415926535897932384626
 #define MOD 1000000007
-#define N 200000
 typedef vector<int> vi;
 typedef vector<ll> vl;
-
-/*.................Combinatorics...............*/
-vl fac;
-ll power(ll a, ll n)
-{
-    a = a % MOD;
-    ll res = 1;
-    while (n > 0)
-    {
-        if (n & 1)
-            res = (res * a) % MOD;
-        a = (a * a) % MOD;
-        n = n >> 1;
-    }
-    return res;
-}
-ll modInverse(ll n)
-{
-    return power(n, MOD - 2);
-}
-void fact(ll n)
-{
-    fac = vl(N);
-    fac[0] = 1;
-    Loop(i, 1, n + 1)
-        fac[i] = (fac[i - 1] * i) % MOD;
-}
-ll nCr(ll n, ll r)
-{
-    ll res = ((fac[n] * modInverse(fac[n - r])) % MOD * modInverse(fac[r])) % MOD;
-    return res;
-}
-/*.........................end-template.................*/
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    fact(N);
-    int n = 3000, r = 1000;
-    cout << nCr(n, r) << endl;
+    w(t)
+    {
+        int n;
+        cin >> n;
+        vi odd(n, 0), even(n, 0);
+        int end = 2 * n, res = INT_MAX;
+        loop(i, n) cin >> odd[i];
+        loop(i, n) cin >> even[i];
+        unordered_map<int, int> umap;
+        loop(i, n) umap[even[i]] = i;
+        loop(i, n)
+        {
+            int temp = odd[i], tempEnd = end;
+            for (int j = temp + 1; j <= tempEnd; j += 2)
+            {
+                if (j < end)
+                    end = j;
+                res = min(res, i + umap[j]);
+            }
+        }
+        cout << res << endl;
+    }
     return 0;
 }

@@ -5,7 +5,6 @@
 using namespace std;
 
 // } Driver Code Ends
-
 //User function Template for C++
 
 class Solution
@@ -13,71 +12,33 @@ class Solution
 public:
     int min_sprinklers(int gallery[], int n)
     {
-        vector<vector<int>> startend(n, vector<int>(2, 0));
-        int st, ed;
+        vector<pair<int, int>> arr;
         for (int i = 0; i < n; i++)
+            if (gallery[i] > -1)
+                arr.push_back({i - gallery[i], i + gallery[i]});
+        sort(arr.begin(), arr.end());
+        int res = 0, maxRight = 0, i = 0;
+        int currMax = arr[i].second;
+        while (maxRight < n)
         {
-            if (gallery[i] != -1)
+            if (i == arr.size() || maxRight < arr[i].first)
+                return -1;
+            currMax = arr[i].second;
+            while (i + 1 < arr.size() && arr[i + 1].first <= maxRight)
             {
-                ed = gallery[i] + i;
-                st = i - gallery[i];
-                startend[i][0] = st;
-                startend[i][1] = ed;
+                i++;
+                currMax = max(currMax, arr[i].second);
             }
-            else
-            {
-                ed = INT_MIN;
-                st = INT_MIN;
-                startend[i][0] = st;
-                startend[i][1] = ed;
-            }
+            if (maxRight > currMax)
+                return -1;
+            maxRight = currMax + 1;
+            res++;
+            i++;
         }
-        sort(startend.begin(), startend.end());
-        int target = INT_MIN;
-        int answer = 1;
-        int j = 0;
-        for (int i = 0; i < n; i++)
-        {
-            cout << startend[i][0] << ':' << startend[i][1] << " ";
-            cout << endl;
-        }
-
-        while (j < n && startend[j][0] <= 0)
-        {
-            cout << j << ' ';
-            if (target < startend[j][1])
-                target = startend[j][1];
-            j++;
-        }
-        if (target == INT_MIN)
-            return -1;
-        int prev = target;
-        cout << endl;
-        cout << target << endl;
-        while (target < n)
-        {
-            while (j < n && startend[j][0] <= prev)
-            {
-                cout << j << ' ';
-                if (target < startend[j][1])
-                {
-                    target = startend[j][1];
-                }
-                j++;
-            }
-            answer++;
-            prev = target;
-        }
-
-        cout << "target: " << target;
-        if (target < n - 1)
-            return -1;
-
-        return answer;
+        return res;
     }
 };
-// {-1, 2, 2, -1, 0, 0}
-//{0,-1,0,0,4,5}
+
 // { Driver Code Starts.
 
 int main()
@@ -95,7 +56,5 @@ int main()
         Solution obj;
         cout << obj.min_sprinklers(gallery, n) << endl;
     }
+    return 1;
 }
-// } Driver Code Ends
-//2, 3, 4, -1, 0, 0, 0, 0, 0
-// 2, 3, 4, -1, 2, 0, 0, -1, 0

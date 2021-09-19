@@ -17,18 +17,20 @@ using namespace std;
 typedef vector<int> vi;
 typedef vector<ll> vl;
 
+int power(int a, int n)
+{
+    if (n == 0)
+        return 1;
+    int p = power(a, n / 2);
+    if (n & 1)
+    {
+        return ((p * p) % MOD) * (a % MOD) % MOD;
+    }
+    else
+        return (p * p) % MOD;
+}
 int main()
 {
-    vl arr = {166307026895, 77048402838, -77048402838, -166307026895};
-    vl d(4, 0);
-    loop(i, 4)
-    {
-        loop(j, 4)
-        {
-            d[i] = d[i] + abs(arr[i] - arr[j]);
-        }
-    }
-    loop(i, 4)
-            cout
-        << d[i] << " ";
+    int ans = 1;
+    cout << power(2, 5) << endl;
 }
